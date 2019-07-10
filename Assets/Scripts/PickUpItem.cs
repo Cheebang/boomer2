@@ -5,9 +5,11 @@ using UnityEngine;
 public class PickUpItem : MonoBehaviour {
     public float interactionDistance = 5f;
     private FireWeapon fireWeapon;
+    private HealthManager healthManager;
 
     void Start() {
         fireWeapon = GetComponent<FireWeapon>();
+        healthManager = GetComponent<HealthManager>();
     }
 
     void Update() {
@@ -23,6 +25,11 @@ public class PickUpItem : MonoBehaviour {
             else if (hit.collider.CompareTag("Ammo")) {
                 Debug.Log("picked up " + item.name);
                 fireWeapon.PickUpAmmo(item.name);
+                item.SetActive(false);
+            }
+            else if (hit.collider.CompareTag("Health")) {
+                Debug.Log("picked up " + item.name);
+                healthManager.PickUpHealth(item.name);
                 item.SetActive(false);
             }
         }
