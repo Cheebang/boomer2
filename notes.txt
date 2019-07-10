@@ -1,0 +1,7 @@
+Billboarding 2d Sprites in a 3d environment for that old school DOOM/Duke3D feel
+
+Using NavMesh for enemy Pathfinding
+Using ProBuilder and ProGrid atm for level design, although may switch to Blender once more familiar
+
+Add FPSController fixes from:
+http://nothkedev.blogspot.com/2017/11/how-to-cope-with-standard-unity-fps.html

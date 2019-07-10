@@ -14,7 +14,7 @@ public class FireWeapon : MonoBehaviour {
 
     private float bloodTime = 0.5f;
     private AudioSource audioSource;
-    private WeaponController weaponController;
+    private WeaponAnimationController weaponController;
 
     List<GameObject> bulletHoles = new List<GameObject>();
     private int currentBulletHoleIndex = 0;
@@ -28,7 +28,7 @@ public class FireWeapon : MonoBehaviour {
         currentWeapon = weapons[0];
 
         audioSource = GetComponent<AudioSource>();
-        weaponController = FindObjectOfType<WeaponController>();
+        weaponController = FindObjectOfType<WeaponAnimationController>();
         for (int i = 0; i < bulletHoleMax; i++) {
             bulletHoles.Add(Instantiate(bulletHole));
         }
