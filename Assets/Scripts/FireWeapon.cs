@@ -14,7 +14,7 @@ public class FireWeapon : MonoBehaviour {
     public bool shooting = false;
     public int bulletHoleMax = 25;
 
-    private float bloodTime = 0.5f;
+    private float bloodTime = 0.7f;
     private AudioSource audioSource;
     private WeaponAnimationController weaponController;
 
