@@ -21,27 +21,7 @@ public class InteractionManager : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, interactionDistance)) {
             GameObject item = hit.collider.gameObject;
-            if (hit.collider.CompareTag("Weapon")) {
-                Debug.Log("picked up " + item.name);
-                fireWeapon.PickUpWeapon(item.name);
-                item.SetActive(false);
-            }
-            else if (hit.collider.CompareTag("Ammo")) {
-                Debug.Log("picked up " + item.name);
-                fireWeapon.PickUpAmmo(item.name);
-                item.SetActive(false);
-            }
-            else if (hit.collider.CompareTag("Health")) {
-                Debug.Log("picked up " + item.name);
-                healthManager.PickUpHealth(item.name);
-                item.SetActive(false);
-            }
-            else if (hit.collider.CompareTag("Item")) {
-                Debug.Log("picked up " + item.name);
-                itemManager.PickUpItem(item.name);
-                item.SetActive(false);
-            }
-            else if (hit.collider.CompareTag("Door")) {
+            if (hit.collider.CompareTag("Door")) {
                 if (Input.GetKeyDown(KeyCode.E)) {
                     Debug.Log("attempt to open door");
                     DoorScript doorScript = hit.collider.gameObject.GetComponent<DoorScript>();
@@ -51,6 +31,30 @@ public class InteractionManager : MonoBehaviour {
                     hudController.OpenMessagePanel("Press E to open");
                 }
             }
+        }
+    }
+
+    void OnTriggerEnter(Collider collider) {
+        GameObject item = collider.gameObject;
+        if (collider.CompareTag("Weapon")) {
+            Debug.Log("picked up " + item.name);
+            fireWeapon.PickUpWeapon(item.name);
+            item.SetActive(false);
+        }
+        else if (collider.CompareTag("Ammo")) {
+            Debug.Log("picked up " + item.name);
+            fireWeapon.PickUpAmmo(item.name);
+            item.SetActive(false);
+        }
+        else if (collider.CompareTag("Health")) {
+            Debug.Log("picked up " + item.name);
+            healthManager.PickUpHealth(item.name);
+            item.SetActive(false);
+        }
+        else if (collider.CompareTag("Item")) {
+            Debug.Log("picked up " + item.name);
+            itemManager.PickUpItem(item.name);
+            item.SetActive(false);
         }
     }
 }
