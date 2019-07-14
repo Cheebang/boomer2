@@ -24,8 +24,6 @@ public class EnemyController : MonoBehaviour {
     }
 
     void Update() {
-        //transform.LookAt(player.gameObject.transform);
-
         Vector3 v = player.gameObject.transform.position - transform.position;
         v.x = v.z = 0.0f;
         transform.LookAt(player.gameObject.transform.position - v);

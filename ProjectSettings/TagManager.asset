@@ -8,6 +8,8 @@ TagManager:
   - Weapon
   - Ammo
   - Health
+  - Item
+  - Door
   layers:
   - Default
   - TransparentFX

@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpItem : MonoBehaviour {
+public class InteractionManager : MonoBehaviour {
     public float interactionDistance = 5f;
     private FireWeapon fireWeapon;
     private HealthManager healthManager;
+    private ItemManager itemManager;
+    private HUDController hudController;
 
     void Start() {
         fireWeapon = GetComponent<FireWeapon>();
         healthManager = GetComponent<HealthManager>();
+        itemManager = GetComponent<ItemManager>();
+        hudController = FindObjectOfType<HUDController>();
     }
 
     void Update() {
@@ -31,6 +35,21 @@ public class PickUpItem : MonoBehaviour {
                 Debug.Log("picked up " + item.name);
                 healthManager.PickUpHealth(item.name);
                 item.SetActive(false);
+            }
+            else if (hit.collider.CompareTag("Item")) {
+                Debug.Log("picked up " + item.name);
+                itemManager.PickUpItem(item.name);
+                item.SetActive(false);
+            }
+            else if (hit.collider.CompareTag("Door")) {
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    Debug.Log("attempt to open door");
+                    DoorScript doorScript = hit.collider.gameObject.GetComponent<DoorScript>();
+                    doorScript.AttemptOpenDoor(itemManager.items);
+                }
+                else {
+                    hudController.OpenMessagePanel("Press E to open");
+                }
             }
         }
     }
