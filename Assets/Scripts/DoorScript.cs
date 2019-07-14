@@ -7,19 +7,25 @@ public class DoorScript : MonoBehaviour {
     public string keyRequired = null;
     public int speed = 1;
     public Vector3 targetPos;
+    private HUDController hud;
 
     private void Start() {
         targetPos = new Vector3(transform.position.x, transform.position.y + 5, transform.position.z);
+        hud = FindObjectOfType<HUDController>();
     }
 
     public void AttemptOpenDoor(List<string> items) {
-        if (!string.IsNullOrEmpty(keyRequired) && !items.Contains(keyRequired)) {
-            Debug.Log("door requires " + keyRequired);
+        bool doorRequiresKey = !string.IsNullOrEmpty(keyRequired);
+
+        if (doorRequiresKey) {
+            if (!items.Contains(keyRequired)) {
+                hud.Log("door requires " + keyRequired);
+                return;
+            }
+            hud.Log("door opened with " + keyRequired);
         }
-        else {
-            Debug.Log("door opens");
-            open = !open;
-        }
+
+        open = !open;
     }
 
     void Update() {

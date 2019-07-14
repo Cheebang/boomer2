@@ -37,22 +37,22 @@ public class InteractionManager : MonoBehaviour {
     void OnTriggerEnter(Collider collider) {
         GameObject item = collider.gameObject;
         if (collider.CompareTag("Weapon")) {
-            Debug.Log("picked up " + item.name);
+            hudController.Log("picked up " + item.name);
             fireWeapon.PickUpWeapon(item.name);
             item.SetActive(false);
         }
         else if (collider.CompareTag("Ammo")) {
-            Debug.Log("picked up " + item.name);
+            hudController.Log("picked up " + item.name);
             fireWeapon.PickUpAmmo(item.name);
             item.SetActive(false);
         }
         else if (collider.CompareTag("Health")) {
-            Debug.Log("picked up " + item.name);
+            hudController.Log("picked up " + item.name);
             healthManager.PickUpHealth(item.name);
             item.SetActive(false);
         }
         else if (collider.CompareTag("Item")) {
-            Debug.Log("picked up " + item.name);
+            hudController.Log("picked up " + item.name);
             itemManager.PickUpItem(item.name);
             item.SetActive(false);
         }

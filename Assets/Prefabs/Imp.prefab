@@ -111,9 +111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   blood: {fileID: 2919541591049311975, guid: 8fec7722bc7244648bdea6ca892991ba, type: 3}
-  minDist: 5
   moveSpeed: 3
-  maxDist: 10
+  minDist: 10
+  maxDist: 3000
 --- !u!95 &1544883501
 Animator:
   serializedVersion: 3
@@ -169,6 +169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   blood: {fileID: 2919541591049311975, guid: 8fec7722bc7244648bdea6ca892991ba, type: 3}
-  minDist: 2
-  moveSpeed: 3
-  maxDist: 10
+  moveSpeed: 5
+  minDist: 10
+  maxDist: 3000
