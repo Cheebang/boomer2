@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 468161750143693993}
   - component: {fileID: 468161750143693992}
   - component: {fileID: 6565117647074019364}
-  - component: {fileID: 1783352011}
   - component: {fileID: 1544883501}
   - component: {fileID: 1544883499}
   - component: {fileID: 985554024740760065}
@@ -97,23 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 1.31, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1783352011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 468161750143693995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53456593d036d9247b7e3ede95384084, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 100
-  blood: {fileID: 2919541591049311975, guid: 8fec7722bc7244648bdea6ca892991ba, type: 3}
-  moveSpeed: 3
-  minDist: 10
-  maxDist: 3000
 --- !u!95 &1544883501
 Animator:
   serializedVersion: 3
@@ -168,7 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  blood: {fileID: 2919541591049311975, guid: 8fec7722bc7244648bdea6ca892991ba, type: 3}
+  blood: {fileID: 1767276933930858723, guid: c54c6f434c4e6c049beb5b656e8760d6, type: 3}
   moveSpeed: 5
   minDist: 10
   maxDist: 3000
+  projectile: {fileID: 8761253700134639540, guid: 67e031967a3c4b446b64512bbfd85ca7,
+    type: 3}

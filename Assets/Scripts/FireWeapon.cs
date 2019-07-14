@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FireWeapon : MonoBehaviour {
     public Weapon currentWeapon;
@@ -21,6 +22,7 @@ public class FireWeapon : MonoBehaviour {
     private int currentBulletHoleIndex = 0;
 
     public List<Weapon> weapons = new List<Weapon>();
+    private bool dead;
 
     void Start() {
         weapons.Add(new Pistol());
@@ -50,6 +52,10 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 
+    internal void Die() {
+        dead = true;
+    }
+
     public void PickUpAmmo(string ammoName) {
         foreach (Weapon weapon in weapons) {
             if (ammoName.Contains(weapon.name)) {
@@ -59,6 +65,12 @@ public class FireWeapon : MonoBehaviour {
     }
 
     void Update() {
+        if (dead) {
+            if (Input.GetButton("Fire1")) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            return;
+        }
         updateCurrentWeapon();
         fireCurrentWeapon();
     }
@@ -88,6 +100,9 @@ public class FireWeapon : MonoBehaviour {
 
                     GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
                     StartCoroutine(SplatterBlood(bloodSplat));
+                }
+                else if (hit.collider.tag == "Projectile") {
+                    return;
                 }
                 else {
                     DrawBulletHole(hit);
