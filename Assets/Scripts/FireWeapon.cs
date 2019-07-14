@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -78,9 +79,13 @@ public class FireWeapon : MonoBehaviour {
                 if (hit.collider.gameObject == gameObject) {
                     return;
                 }
-                else if (hit.collider.gameObject.tag == "Enemy") {
+                else if (hit.collider.tag == "Enemy") {
+                    float playerDistance = Vector3.Distance(transform.position, hit.collider.transform.position);
+                    int effectiveDamage = CalcEffectiveDamage(playerDistance);
+
                     EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>();
-                    enemyController.TakeDamage(currentWeapon.damage);
+                    enemyController.TakeDamage(effectiveDamage);
+
                     GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
                     StartCoroutine(SplatterBlood(bloodSplat));
                 }
@@ -92,6 +97,17 @@ public class FireWeapon : MonoBehaviour {
         if (Input.GetButtonDown("Fire1") && currentWeapon.ammo == 0) {
             audioSource.PlayOneShot(emptySound, 0.5f);
         }
+    }
+
+    private int CalcEffectiveDamage(float playerDistance) {
+        int effectiveDamage = currentWeapon.damage;
+
+        if (playerDistance > currentWeapon.effectiveRange) {
+            int difference = Convert.ToInt32(currentWeapon.range - playerDistance);
+            effectiveDamage = Convert.ToInt32(currentWeapon.damage * (difference / currentWeapon.range));
+        }
+
+        return effectiveDamage;
     }
 
     private void updateCurrentWeapon() {

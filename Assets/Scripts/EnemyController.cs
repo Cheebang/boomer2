@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour {
         }
         else {
             agent.isStopped = false;
-            float playerDistance = Math.Abs(Vector3.Distance(transform.position, player.transform.position));
+            float playerDistance = Vector3.Distance(transform.position, player.transform.position);
             if (playerDistance >= minDist && playerDistance <= maxDist) {
                 agent.SetDestination(player.gameObject.transform.position);
             }

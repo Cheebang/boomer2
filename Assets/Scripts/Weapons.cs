@@ -9,8 +9,9 @@ public abstract class Weapon {
     public bool collected;
     public int ammo;
     public bool auto;
+    public float effectiveRange;
 
-    public Weapon(string name, float range, float fireRate, int damage, int ammo, bool collected, bool auto) {
+    public Weapon(string name, float range, float fireRate, int damage, int ammo, bool collected, bool auto, float effectiveRange) {
         this.name = name;
         this.range = range;
         this.fireRate = fireRate;
@@ -18,20 +19,21 @@ public abstract class Weapon {
         this.ammo = ammo;
         this.collected = collected;
         this.auto = auto;
+        this.effectiveRange = effectiveRange;
     }
 }
 
 public class Pistol : Weapon {
-    public Pistol() : base("pistol", 9999f, 0.25f, 25, 10, true, false) {
+    public Pistol() : base("pistol", 9999f, 0.25f, 25, 10, true, false, 9999f) {
     }
 }
 
 public class Shotgun : Weapon {
-    public Shotgun() : base("shotgun", 20f, 1f, 100, 5, false, false) {
+    public Shotgun() : base("shotgun", 20f, 1f, 100, 5, false, false, 5f) {
     }
 }
 
 public class MachineGun : Weapon {
-    public MachineGun() : base("mg", 100f, 0.15f, 25, 25, true, true) {
+    public MachineGun() : base("mg", 100f, 0.15f, 25, 25, true, true, 100f) {
     }
 }
