@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class InteractionManager : MonoBehaviour {
     public float interactionDistance = 5f;
@@ -8,15 +9,30 @@ public class InteractionManager : MonoBehaviour {
     private HealthManager healthManager;
     private ItemManager itemManager;
     private HUDController hudController;
+    private FirstPersonController player;
+    private bool paused = false;
 
     void Start() {
         fireWeapon = GetComponent<FireWeapon>();
         healthManager = GetComponent<HealthManager>();
         itemManager = GetComponent<ItemManager>();
         hudController = FindObjectOfType<HUDController>();
+        player = GetComponent<FirstPersonController>();
     }
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            paused = !paused;
+            player.paused = paused;
+            if (!paused) {
+                ContinueGame();
+            }
+        }
+
+        if (paused) {
+            PauseGame();
+        }
+
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, interactionDistance)) {
@@ -57,4 +73,14 @@ public class InteractionManager : MonoBehaviour {
             item.SetActive(false);
         }
     }
+
+    private void PauseGame() {
+        Time.timeScale = 0;
+        hudController.OpenMessagePanel("Paused");
+    }
+    private void ContinueGame() {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+    }
+
 }

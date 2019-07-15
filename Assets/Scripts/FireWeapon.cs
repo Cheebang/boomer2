@@ -140,6 +140,7 @@ public class FireWeapon : MonoBehaviour {
         GameObject currentHole = bulletHoles[currentBulletHoleIndex];
         currentHole.transform.position = hit.point;
         currentHole.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+        currentHole.transform.parent = hit.transform;
         currentBulletHoleIndex++;
         if (currentBulletHoleIndex >= bulletHoleMax) {
             currentBulletHoleIndex = 0;
