@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,6 +37,16 @@ public class InteractionManager : MonoBehaviour {
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.F2)) {
+            SaveSystem.SavePlayer(gameObject);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            PlayerData playerData = SaveSystem.LoadPlayer();
+            LoadData(playerData);
+            return;
+        }
+
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, interactionDistance)) {
@@ -72,6 +82,16 @@ public class InteractionManager : MonoBehaviour {
         }
     }
 
+    internal void LoadData(PlayerData playerData) {
+        player.transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+        healthManager.health = playerData.health;
+        itemManager.items = new List<string>(playerData.items);
+        if (paused) {
+            paused = false;
+            ContinueGame();
+        }
+    }
+
     void OnTriggerEnter(Collider collider) {
         GameObject item = collider.gameObject;
         if (collider.CompareTag("Weapon")) {
@@ -91,13 +111,21 @@ public class InteractionManager : MonoBehaviour {
     }
 
     private void PauseGame() {
+        player.m_MouseLook.lockCursor = false;
+        player.m_MouseLook.SetCursorLock(false);
+        player.m_MouseLook.UpdateCursorLock();
         Time.timeScale = 0;
-        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         mainMenu.Show();
     }
     private void ContinueGame() {
+        player.m_MouseLook.lockCursor = true;
+        player.m_MouseLook.SetCursorLock(true);
+        player.m_MouseLook.UpdateCursorLock();
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         mainMenu.Hide();
     }

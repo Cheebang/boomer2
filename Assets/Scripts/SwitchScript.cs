@@ -10,6 +10,7 @@ public class SwitchScript : MonoBehaviour {
         if (!pushed) {
             pushed = true;
             door.GetComponent<DoorScript>().Unlock();
+            FindObjectOfType<HUDController>().Log("a secret is revealed...");
         }
     }
 }
