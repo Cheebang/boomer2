@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class InteractionManager : MonoBehaviour {
@@ -10,6 +11,7 @@ public class InteractionManager : MonoBehaviour {
     private ItemManager itemManager;
     private HUDController hudController;
     private FirstPersonController player;
+    private MainMenuController mainMenu;
     private bool paused = false;
 
     void Start() {
@@ -18,19 +20,21 @@ public class InteractionManager : MonoBehaviour {
         itemManager = GetComponent<ItemManager>();
         hudController = FindObjectOfType<HUDController>();
         player = GetComponent<FirstPersonController>();
+        mainMenu = FindObjectOfType<MainMenuController>();
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             paused = !paused;
             player.paused = paused;
-            if (!paused) {
-                ContinueGame();
+            fireWeapon.paused = paused;
+            if (paused) {
+                PauseGame();
             }
-        }
+            else {
+                ContinueGame();
 
-        if (paused) {
-            PauseGame();
+            }
         }
 
         Ray ray = new Ray(transform.position, transform.forward);
@@ -47,25 +51,37 @@ public class InteractionManager : MonoBehaviour {
                     hudController.OpenMessagePanel("Press E to open");
                 }
             }
+            else if (hit.collider.CompareTag("ExitLevel")) {
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+                else {
+                    hudController.OpenMessagePanel("Press E to exit level");
+                }
+            }
+            else if (hit.collider.CompareTag("Switch")) {
+                SwitchScript switchScript = hit.collider.gameObject.GetComponent<SwitchScript>();
+
+                if (!switchScript.pushed) {
+                    hudController.OpenMessagePanel("Press E interact");
+                }
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    switchScript.PushSwitch();
+                }
+            }
         }
     }
 
     void OnTriggerEnter(Collider collider) {
         GameObject item = collider.gameObject;
         if (collider.CompareTag("Weapon")) {
-            hudController.Log("picked up " + item.name);
-            fireWeapon.PickUpWeapon(item.name);
-            item.SetActive(false);
+            fireWeapon.PickUpWeapon(item);
         }
         else if (collider.CompareTag("Ammo")) {
-            hudController.Log("picked up " + item.name);
-            fireWeapon.PickUpAmmo(item.name);
-            item.SetActive(false);
+            fireWeapon.PickUpAmmo(item);
         }
         else if (collider.CompareTag("Health")) {
-            hudController.Log("picked up " + item.name);
-            healthManager.PickUpHealth(item.name);
-            item.SetActive(false);
+            healthManager.PickUpHealth(item);
         }
         else if (collider.CompareTag("Item")) {
             hudController.Log("picked up " + item.name);
@@ -76,11 +92,14 @@ public class InteractionManager : MonoBehaviour {
 
     private void PauseGame() {
         Time.timeScale = 0;
-        hudController.OpenMessagePanel("Paused");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        mainMenu.Show();
     }
     private void ContinueGame() {
         Time.timeScale = 1;
         Cursor.visible = false;
+        mainMenu.Hide();
     }
 
 }

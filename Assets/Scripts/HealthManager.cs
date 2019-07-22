@@ -8,27 +8,32 @@ public class HealthManager : MonoBehaviour {
     public int health = 100;
     private FirstPersonController fpsController;
     private FireWeapon fireWeapon;
-    private HUDController hud;
+    private HUDController hudController;
     private bool dead;
 
     void Start() {
         fpsController = GetComponent<FirstPersonController>();
         fireWeapon = GetComponent<FireWeapon>();
-        hud = FindObjectOfType<HUDController>();
+        hudController = FindObjectOfType<HUDController>();
     }
 
     void Update() {
         if (dead) {
-            hud.OpenMessagePanel("You are dead\nClick to restart");
+            hudController.OpenMessagePanel("You are dead\nClick to restart");
         }
     }
 
-    public void PickUpHealth(string name) {
+    public void PickUpHealth(GameObject item) {
         if (health < 100) {
+            hudController.Log("picked up " + item.name);
             health += 25;
+            item.SetActive(false);
             if (health > 100) {
                 health = 100;
             }
+        }
+        else {
+            hudController.Log("health at max");
         }
     }
 

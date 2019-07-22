@@ -12,6 +12,8 @@ TagManager:
   - Door
   - Projectile
   - Map
+  - ExitLevel
+  - Switch
   layers:
   - Default
   - TransparentFX

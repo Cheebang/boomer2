@@ -17,12 +17,14 @@ public class FireWeapon : MonoBehaviour {
     private float bloodTime = 0.7f;
     private AudioSource audioSource;
     private WeaponAnimationController weaponController;
+    private HUDController hudController;
 
     List<GameObject> bulletHoles = new List<GameObject>();
     private int currentBulletHoleIndex = 0;
 
     public List<Weapon> weapons = new List<Weapon>();
     private bool dead;
+    public bool paused;
 
     void Start() {
         weapons.Add(new Pistol());
@@ -32,21 +34,45 @@ public class FireWeapon : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
         weaponController = FindObjectOfType<WeaponAnimationController>();
+        hudController = FindObjectOfType<HUDController>();
+
         for (int i = 0; i < bulletHoleMax; i++) {
             bulletHoles.Add(Instantiate(bulletHole));
         }
     }
 
-    public void PickUpWeapon(string weaponName) {
+    public void PickUpWeapon(GameObject item) {
         foreach (Weapon weapon in weapons) {
-            if (weaponName == weapon.name) {
+            if (item.name == weapon.name) {
                 if (!weapon.collected) {
                     weapon.collected = true;
                     weaponController.SwitchWeaponTo(currentWeapon.name, weapon.name);
                     currentWeapon = weapon;
+                    hudController.Log("picked up " + item.name);
+                    item.SetActive(false);
+                }
+                else if (weapon.ammo < weapon.maxAmmo) {
+                    hudController.Log("picked up " + item.name);
+                    weapon.AddAmmo(20);
+                    item.SetActive(false);
                 }
                 else {
-                    weapon.ammo = weapon.ammo + 20;
+                    hudController.Log(weapon.name + " ammo is full");
+                }
+            }
+        }
+    }
+
+    public void PickUpAmmo(GameObject item) {
+        foreach (Weapon weapon in weapons) {
+            if (item.name.Contains(weapon.name)) {
+                if (weapon.ammo < weapon.maxAmmo) {
+                    hudController.Log("picked up " + item.name);
+                    weapon.AddAmmo(10);
+                    item.SetActive(false);
+                }
+                else {
+                    hudController.Log(weapon.name + " ammo is full");
                 }
             }
         }
@@ -56,19 +82,14 @@ public class FireWeapon : MonoBehaviour {
         dead = true;
     }
 
-    public void PickUpAmmo(string ammoName) {
-        foreach (Weapon weapon in weapons) {
-            if (ammoName.Contains(weapon.name)) {
-                weapon.ammo = weapon.ammo + 10;
-            }
-        }
-    }
-
     void Update() {
         if (dead) {
             if (Input.GetButton("Fire1")) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            return;
+        }
+        if (paused) {
             return;
         }
         updateCurrentWeapon();
