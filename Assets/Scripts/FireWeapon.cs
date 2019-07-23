@@ -117,12 +117,14 @@ public class FireWeapon : MonoBehaviour {
                     int effectiveDamage = CalcEffectiveDamage(playerDistance);
 
                     EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>();
-                    enemyController.TakeDamage(effectiveDamage);
+                    if (enemyController != null) {
+                        enemyController.TakeDamage(effectiveDamage);
+                    }
 
                     GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
                     StartCoroutine(SplatterBlood(bloodSplat));
                 }
-                else if (hit.collider.tag == "Projectile") {
+                else if (hit.collider.tag == "Projectile" || hit.collider.tag == "Weapon" || hit.collider.tag == "Item") {
                     return;
                 }
                 else {
