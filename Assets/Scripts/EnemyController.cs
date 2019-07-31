@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour {
     public float minDist = 10f;
     public float maxDist = 300f;
     public GameObject projectile;
+    public bool dumb;
 
     private Animator anim;
     private FirstPersonController player;
@@ -32,6 +33,9 @@ public class EnemyController : MonoBehaviour {
     void Update() {
         Vector3 v = new Vector3(0, player.transform.position.y - transform.position.y, 0);
         transform.LookAt(player.transform.position - v);
+        if (dumb) {
+            return;
+        }
 
         if (dead) {
             agent.isStopped = true;

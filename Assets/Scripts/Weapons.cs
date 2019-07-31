@@ -2,26 +2,19 @@
 
 public abstract class Weapon {
     public string name;
-    public float range;
-    public float fireRate;
-    public int damage;
+    public float range = 9999f;
+    public float fireRate = 0.25f;
+    public int damage = 25;
     public AudioClip shootSound;
-    public bool collected;
-    public int ammo;
-    public int maxAmmo;
-    public bool auto;
-    public float effectiveRange;
+    public bool collected = false;
+    public int ammo = 10;
+    public int maxAmmo = 299;
+    public bool auto = false;
+    public bool projectile = false;
+    public float effectiveRange = 9999f;
 
-    public Weapon(string name, float range, float fireRate, int damage, int ammo, int maxAmmo, bool collected, bool auto, float effectiveRange) {
+    public Weapon(string name) {
         this.name = name;
-        this.range = range;
-        this.fireRate = fireRate;
-        this.damage = damage;
-        this.ammo = ammo;
-        this.maxAmmo = maxAmmo;
-        this.collected = collected;
-        this.auto = auto;
-        this.effectiveRange = effectiveRange;
     }
 
     public void AddAmmo(int amount) {
@@ -32,17 +25,56 @@ public abstract class Weapon {
     }
 }
 
+public class Melee : Weapon {
+    public Melee() : base("melee") {
+        range = 2f;
+        fireRate = 0.5f;
+        damage = 20;
+        ammo = -1;
+        maxAmmo = 1;
+        effectiveRange = range;
+        collected = true;
+    }
+}
+
 public class Pistol : Weapon {
-    public Pistol() : base("pistol", 9999f, 0.25f, 25, 10, 299, true, false, 9999f) {
+    public Pistol() : base("pistol") {
+        collected = true;
     }
 }
 
 public class Shotgun : Weapon {
-    public Shotgun() : base("shotgun", 20f, 1f, 100, 5, 99, false, false, 5f) {
+    public Shotgun() : base("shotgun") {
+        range = 20f;
+        fireRate = 1f;
+        damage = 100;
+        ammo = 5;
+        maxAmmo = 99;
+        collected = false;
+        effectiveRange = 5f;
     }
 }
 
 public class MachineGun : Weapon {
-    public MachineGun() : base("mg", 100f, 0.15f, 25, 25, 499, true, true, 100f) {
+    public MachineGun() : base("mg") {
+        range = 100f;
+        fireRate = 0.15f;
+        damage = 25;
+        ammo = 25;
+        maxAmmo = 499;
+        collected = true;
+        auto = true;
+        effectiveRange = 100f;
+    }
+}
+
+public class RPG : Weapon {
+    public RPG() : base("rpg") {
+        fireRate = 0.5f;
+        damage = 700;
+        ammo = -1;
+        maxAmmo = 49;
+        collected = true;
+        projectile = true;
     }
 }

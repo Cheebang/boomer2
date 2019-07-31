@@ -14,6 +14,11 @@ public class FireWeapon : MonoBehaviour {
     public bool shooting = false;
     public int bulletHoleMax = 25;
 
+    public List<Weapon> weapons = new List<Weapon>();
+    public bool paused;
+    public int projectileSpeed = 10;
+    public GameObject projectile;
+
     private float bloodTime = 0.7f;
     private AudioSource audioSource;
     private WeaponAnimationController weaponController;
@@ -22,15 +27,15 @@ public class FireWeapon : MonoBehaviour {
     List<GameObject> bulletHoles = new List<GameObject>();
     private int currentBulletHoleIndex = 0;
 
-    public List<Weapon> weapons = new List<Weapon>();
     private bool dead;
-    public bool paused;
 
     void Start() {
+        weapons.Add(new Melee());
         weapons.Add(new Pistol());
         weapons.Add(new Shotgun());
         weapons.Add(new MachineGun());
-        currentWeapon = weapons[0];
+        weapons.Add(new RPG());
+        currentWeapon = weapons[1];
 
         audioSource = GetComponent<AudioSource>();
         weaponController = FindObjectOfType<WeaponAnimationController>();
@@ -99,7 +104,7 @@ public class FireWeapon : MonoBehaviour {
     private void fireCurrentWeapon() {
         bool autoWeaponShoot = Input.GetMouseButton(0) && currentWeapon.auto;
         bool nonAutoWeaponShoot = Input.GetButtonDown("Fire1") && !currentWeapon.auto;
-        if ((autoWeaponShoot || nonAutoWeaponShoot) && !shooting && currentWeapon.ammo > 0) {
+        if ((autoWeaponShoot || nonAutoWeaponShoot) && !shooting && currentWeapon.ammo != 0) {
             shooting = true;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -109,8 +114,12 @@ public class FireWeapon : MonoBehaviour {
             currentWeapon.ammo = currentWeapon.ammo - 1;
 
             if (Physics.Raycast(ray, out hit, currentWeapon.range)) {
-                if (hit.collider.gameObject == gameObject) {
+                Debug.DrawLine(transform.position, hit.point);
+                if (hit.collider.tag == "Player" || hit.collider.tag == "Projectile" || hit.collider.tag == "Weapon" || hit.collider.tag == "Item") {
                     return;
+                }
+                else if (currentWeapon.projectile) {
+                    FireProjectile(hit);
                 }
                 else if (hit.collider.tag == "Enemy") {
                     float playerDistance = Vector3.Distance(transform.position, hit.collider.transform.position);
@@ -124,9 +133,6 @@ public class FireWeapon : MonoBehaviour {
                     GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
                     StartCoroutine(SplatterBlood(bloodSplat));
                 }
-                else if (hit.collider.tag == "Projectile" || hit.collider.tag == "Weapon" || hit.collider.tag == "Item") {
-                    return;
-                }
                 else {
                     DrawBulletHole(hit);
                 }
@@ -135,6 +141,14 @@ public class FireWeapon : MonoBehaviour {
         if (Input.GetButtonDown("Fire1") && currentWeapon.ammo == 0) {
             audioSource.PlayOneShot(emptySound, 0.5f);
         }
+    }
+
+    private void FireProjectile(RaycastHit hit) {
+        Vector3 spawnPos = transform.position + (transform.forward * 2f);
+        spawnPos.y += 1;
+        GameObject newProjectile = Instantiate(projectile, spawnPos, transform.rotation);
+        newProjectile.transform.LookAt(hit.point);
+        newProjectile.GetComponent<Rigidbody>().velocity = newProjectile.transform.forward * projectileSpeed;
     }
 
     private int CalcEffectiveDamage(float playerDistance) {

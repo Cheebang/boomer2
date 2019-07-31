@@ -9,6 +9,7 @@ public class ExplodeScript : MonoBehaviour {
     public float blastForce = 1000;
     public float blastDuration = 2f;
     public bool explodeOnCollision = false;
+    public int damage = 100;
 
     private bool hasExploded;
 
@@ -44,7 +45,10 @@ public class ExplodeScript : MonoBehaviour {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if (rb != null) {
                 rb.AddExplosionForce(blastForce, transform.position, blastRadius);
-                //Damage if damageable
+            }
+            EnemyController enemyController = nearbyObject.GetComponent<EnemyController>();
+            if (enemyController != null) {
+                enemyController.TakeDamage(damage);
             }
         }
     }
