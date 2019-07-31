@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6283669112103140265}
   - component: {fileID: 4292141239512299880}
   - component: {fileID: 410626899896510673}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 3323592167355921455}
   - component: {fileID: 3323592167355921489}
   - component: {fileID: 3323592167355921454}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 3323592167759548390}
   - component: {fileID: 3323592167759548391}
   - component: {fileID: 3323592167759548388}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: NewGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 3323592168942066094}
   - component: {fileID: 3323592168942066128}
   - component: {fileID: 3323592168942066129}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 3323592168972574079}
   - component: {fileID: 3323592168972574049}
   - component: {fileID: 3323592168972574078}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 3323592168981231530}
   - component: {fileID: 3323592168981231531}
   - component: {fileID: 3323592168981231528}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 3323592169085011126}
   - component: {fileID: 3323592169085011127}
   - component: {fileID: 850330150}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3323592169085011126
 MonoBehaviour:
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 4560687948867319033}
   - component: {fileID: 2231909097214273736}
   - component: {fileID: 5135328855380569487}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 2395847081603035224}
   - component: {fileID: 3945615155058188226}
   - component: {fileID: 8562793004568510572}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Save Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,7 +877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8557079984881599832}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +920,7 @@ GameObject:
   - component: {fileID: 2850020790640046827}
   - component: {fileID: 6752589378830719640}
   - component: {fileID: 3094284697047838870}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: LoadGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}

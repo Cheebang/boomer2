@@ -10,6 +10,8 @@ public class MainMenuController : MonoBehaviour {
     public bool isMainMenu;
     public GameObject player;
 
+    public bool showUI;
+
     private void Start() {
         newGameButton.onClick.AddListener(NewGame);
         saveButton.onClick.AddListener(Save);
@@ -18,12 +20,21 @@ public class MainMenuController : MonoBehaviour {
         isMainMenu = SceneManager.GetActiveScene().buildIndex == 0;
     }
 
+    void Update() {
+        if (showUI) {
+            ui.SetActive(true);
+        }
+        else {
+            ui.SetActive(false);
+        }
+    }
+
     public void Show() {
-        ui.SetActive(true);
+        showUI = true;
     }
 
     public void Hide() {
-        ui.SetActive(false);
+        showUI = false;
     }
 
     void NewGame() {

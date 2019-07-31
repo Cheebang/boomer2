@@ -17,6 +17,10 @@ public class HUDController : MonoBehaviour {
     private FireWeapon weaponData;
     private HealthManager healthManager;
 
+    void Awake() {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start() {
         weaponData = FindObjectOfType<FireWeapon>();
         healthManager = FindObjectOfType<HealthManager>();

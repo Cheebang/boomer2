@@ -14,6 +14,10 @@ public class InteractionManager : MonoBehaviour {
     private MainMenuController mainMenu;
     private bool paused = false;
 
+    void Awake() {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Start() {
         fireWeapon = GetComponent<FireWeapon>();
         healthManager = GetComponent<HealthManager>();
@@ -26,25 +30,29 @@ public class InteractionManager : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             paused = !paused;
-            player.paused = paused;
-            fireWeapon.paused = paused;
-            if (paused) {
-                PauseGame();
-            }
-            else {
-                ContinueGame();
+        }
 
-            }
+        if (paused) {
+            PauseGame();
+        }
+        else {
+            ContinueGame();
+
         }
 
         if (Input.GetKeyDown(KeyCode.F2)) {
+            hudController.Log("Quicksaved...");
             SaveSystem.SavePlayer(gameObject);
+            if (paused) {
+                paused = false;
+                ContinueGame();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F3)) {
+            hudController.Log("Quickloaded...");
             PlayerData playerData = SaveSystem.LoadPlayer();
             LoadData(playerData);
-            return;
         }
 
         Ray ray = new Ray(transform.position, transform.forward);
@@ -111,22 +119,28 @@ public class InteractionManager : MonoBehaviour {
     }
 
     private void PauseGame() {
+        player.paused = true;
+        fireWeapon.paused = true;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         player.m_MouseLook.lockCursor = false;
         player.m_MouseLook.SetCursorLock(false);
         player.m_MouseLook.UpdateCursorLock();
         Time.timeScale = 0;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         mainMenu.Show();
     }
     private void ContinueGame() {
+        player.paused = false;
+        fireWeapon.paused = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
         player.m_MouseLook.lockCursor = true;
         player.m_MouseLook.SetCursorLock(true);
         player.m_MouseLook.UpdateCursorLock();
         Time.timeScale = 1;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
         mainMenu.Hide();
     }
 
