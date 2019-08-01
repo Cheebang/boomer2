@@ -88,13 +88,7 @@ public class FireWeapon : MonoBehaviour {
     }
 
     void Update() {
-        if (dead) {
-            if (Input.GetButton("Fire1")) {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-            return;
-        }
-        if (paused) {
+        if (dead || paused) {
             return;
         }
         updateCurrentWeapon();
@@ -133,6 +127,10 @@ public class FireWeapon : MonoBehaviour {
                     GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
                     StartCoroutine(SplatterBlood(bloodSplat));
                 }
+                else if (hit.collider.tag == "Explodable") {
+                    ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
+                    exploder.Explode();
+                }
                 else {
                     DrawBulletHole(hit);
                 }
@@ -145,7 +143,7 @@ public class FireWeapon : MonoBehaviour {
 
     private void FireProjectile(RaycastHit hit) {
         Vector3 spawnPos = transform.position + (transform.forward * 2f);
-        spawnPos.y += 1;
+        spawnPos.y += 0.5f;
         GameObject newProjectile = Instantiate(projectile, spawnPos, transform.rotation);
         newProjectile.transform.LookAt(hit.point);
         newProjectile.GetComponent<Rigidbody>().velocity = newProjectile.transform.forward * projectileSpeed;

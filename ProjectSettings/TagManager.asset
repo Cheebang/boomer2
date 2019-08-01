@@ -14,6 +14,7 @@ TagManager:
   - Map
   - ExitLevel
   - Switch
+  - Explodable
   layers:
   - Default
   - TransparentFX

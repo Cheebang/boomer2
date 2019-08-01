@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class HealthManager : MonoBehaviour {
@@ -10,8 +11,11 @@ public class HealthManager : MonoBehaviour {
     private FireWeapon fireWeapon;
     private HUDController hudController;
     private bool dead;
+    private float startDeadTimer = 1f;
+    private float deadTimer;
 
     void Start() {
+        deadTimer = startDeadTimer;
         fpsController = GetComponent<FirstPersonController>();
         fireWeapon = GetComponent<FireWeapon>();
         hudController = FindObjectOfType<HUDController>();
@@ -20,6 +24,13 @@ public class HealthManager : MonoBehaviour {
     void Update() {
         if (dead) {
             hudController.OpenMessagePanel("You are dead\nClick to restart");
+            if (deadTimer <= 0 && Input.GetButtonUp("Fire1")) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                deadTimer = startDeadTimer;
+            }
+            else {
+                deadTimer -= Time.deltaTime;
+            }
         }
     }
 

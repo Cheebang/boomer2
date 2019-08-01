@@ -14,10 +14,6 @@ public class InteractionManager : MonoBehaviour {
     private MainMenuController mainMenu;
     private bool paused = false;
 
-    void Awake() {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     void Start() {
         fireWeapon = GetComponent<FireWeapon>();
         healthManager = GetComponent<HealthManager>();
