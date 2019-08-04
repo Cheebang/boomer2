@@ -86,13 +86,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToExplode: 0
-  explosionEffect: {fileID: 8498336327033195404, guid: 346b7f34fbe3eaa4b85d737835b4a44f,
+  explosionEffect: {fileID: 9080889848821061101, guid: b656677a8059ae94fb8345f330990fae,
     type: 3}
   blastRadius: 5
-  blastForce: 1000
-  blastDuration: 2
   explodeOnCollision: 1
-  damage: 100
+  explodeWhenShot: 0
 --- !u!23 &3725949140102898950
 MeshRenderer:
   m_ObjectHideFlags: 0

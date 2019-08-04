@@ -15,6 +15,7 @@ TagManager:
   - ExitLevel
   - Switch
   - Explodable
+  - Armor
   layers:
   - Default
   - TransparentFX

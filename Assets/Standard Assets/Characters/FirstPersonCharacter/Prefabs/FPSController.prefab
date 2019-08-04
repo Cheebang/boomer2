@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 844643628}
   m_Layer: 0
   m_Name: FPSController
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,10 +177,11 @@ MonoBehaviour:
     BobAmount: 0.1
   m_StepInterval: 5
   m_FootstepSounds:
-  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
-  - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  paused: 0
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -309,9 +310,13 @@ MonoBehaviour:
   emptySound: {fileID: 8300000, guid: 67daca154c9e31e4bbbab0779d2cbdc8, type: 3}
   bulletHole: {fileID: 8545694988074812918, guid: d63f5e218c0b53f449c65763b0d5fb2e,
     type: 3}
-  blood: {fileID: 2919541591049311975, guid: 8fec7722bc7244648bdea6ca892991ba, type: 3}
+  blood: {fileID: 1767276933930858723, guid: c54c6f434c4e6c049beb5b656e8760d6, type: 3}
   shooting: 0
   bulletHoleMax: 25
+  paused: 0
+  projectileSpeed: 15
+  projectile: {fileID: 4596507300327383360, guid: ac89cd10b207207458ed2ecb37021155,
+    type: 3}
 --- !u!114 &844643626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969a0d1af66754648bb124a32a8d6389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 80
+  health: 81
 --- !u!114 &844643628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,9 +402,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -482,12 +488,13 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4898664587618052801}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 2
   m_Color: {r: 0.9150943, g: 0.9121829, b: 0.77265036, a: 1}
   m_Intensity: 2
   m_Range: 20
   m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
@@ -497,6 +504,24 @@ Light:
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 12100000, guid: 9bdb18c49d114cb4300035184241aa39, type: 2}
@@ -504,11 +529,14 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

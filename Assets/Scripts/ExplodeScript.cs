@@ -6,7 +6,7 @@ public class ExplodeScript : MonoBehaviour {
     public float timeToExplode;
     public GameObject explosionEffect;
     public float blastRadius = 5;
-    public float blastForce = 1000;
+    private float blastForce = 400;
     private float blastDuration = 0.9f;
     public bool explodeOnCollision = false;
     public bool explodeWhenShot = false;
@@ -46,11 +46,12 @@ public class ExplodeScript : MonoBehaviour {
         Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, blastRadius);
         foreach (Collider nearbyObject in nearbyObjects) {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            float distance = Vector3.Distance(nearbyObject.gameObject.transform.position, transform.position);
-            int calcDamage = Mathf.CeilToInt((1 / distance) * damage);
             if (rb != null) {
                 rb.AddExplosionForce(blastForce, transform.position, blastRadius);
             }
+
+            float distance = Vector3.Distance(nearbyObject.gameObject.transform.position, transform.position);
+            int calcDamage = Mathf.CeilToInt((1 / distance) * damage);
             EnemyController enemyController = nearbyObject.GetComponent<EnemyController>();
             if (enemyController != null) {
                 enemyController.TakeDamage(calcDamage);
@@ -58,6 +59,10 @@ public class ExplodeScript : MonoBehaviour {
             HealthManager player = nearbyObject.GetComponent<HealthManager>();
             if (player != null) {
                 player.TakeDamage(calcDamage);
+            }
+            ExplodeScript explodable = nearbyObject.GetComponent<ExplodeScript>();
+            if (explodable != null) {
+                explodable.Explode();
             }
         }
     }

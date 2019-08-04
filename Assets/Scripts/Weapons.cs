@@ -12,6 +12,8 @@ public abstract class Weapon {
     public bool auto = false;
     public bool projectile = false;
     public float effectiveRange = 9999f;
+    public int bulletForce = 3;
+    public int pellets = 1;
 
     public Weapon(string name) {
         this.name = name;
@@ -52,6 +54,8 @@ public class Shotgun : Weapon {
         maxAmmo = 99;
         collected = false;
         effectiveRange = 5f;
+        bulletForce = 5;
+        pellets = 5;
     }
 }
 

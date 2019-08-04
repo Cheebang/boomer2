@@ -10,6 +10,7 @@ public class HUDController : MonoBehaviour {
     public Text ammoPanelText;
     public Text weaponNameText;
     public Text healthPanelText;
+    public Text armorPanelText;
     public Text log;
     public float logTextDisplayLength = 3f;
 
@@ -32,6 +33,7 @@ public class HUDController : MonoBehaviour {
         }
 
         healthPanelText.text = healthManager.health.ToString();
+        armorPanelText.text = healthManager.armor.ToString();
     }
 
     public void OpenMessagePanel(string text) {

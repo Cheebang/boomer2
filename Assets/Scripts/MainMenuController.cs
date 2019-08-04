@@ -38,17 +38,14 @@ public class MainMenuController : MonoBehaviour {
     }
 
     void NewGame() {
-        Debug.Log("clicked new game");
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
     }
 
     void Save() {
-        Debug.Log("clicked save game");
         SaveSystem.SavePlayer(player);
     }
 
     void Load() {
-        Debug.Log("clicked load game");
         PlayerData playerData = SaveSystem.LoadPlayer();
         player.GetComponent<InteractionManager>().LoadData(playerData);
     }

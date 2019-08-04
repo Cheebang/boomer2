@@ -14,7 +14,7 @@ public class FireWeapon : MonoBehaviour {
     public bool shooting = false;
     public int bulletHoleMax = 25;
 
-    public List<Weapon> weapons = new List<Weapon>();
+    public List<Weapon> weapons = new List<Weapon>() { new Melee(), new Pistol(), new Shotgun(), new MachineGun(), new RPG() };
     public bool paused;
     public int projectileSpeed = 10;
     public GameObject projectile;
@@ -29,12 +29,9 @@ public class FireWeapon : MonoBehaviour {
 
     private bool dead;
 
+    private List<string> ignoreTags = new List<string>() { "Player", "Projectile", "Weapon", "Item", "Ammo" };
+
     void Start() {
-        weapons.Add(new Melee());
-        weapons.Add(new Pistol());
-        weapons.Add(new Shotgun());
-        weapons.Add(new MachineGun());
-        weapons.Add(new RPG());
         currentWeapon = weapons[1];
 
         audioSource = GetComponent<AudioSource>();
@@ -109,30 +106,39 @@ public class FireWeapon : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit, currentWeapon.range)) {
                 Debug.DrawLine(transform.position, hit.point);
-                if (hit.collider.tag == "Player" || hit.collider.tag == "Projectile" || hit.collider.tag == "Weapon" || hit.collider.tag == "Item") {
+                if (ignoreTags.Contains(hit.collider.tag)) {
                     return;
                 }
-                else if (currentWeapon.projectile) {
+
+                if (currentWeapon.projectile) {
                     FireProjectile(hit);
                 }
-                else if (hit.collider.tag == "Enemy") {
-                    float playerDistance = Vector3.Distance(transform.position, hit.collider.transform.position);
-                    int effectiveDamage = CalcEffectiveDamage(playerDistance);
-
-                    EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>();
-                    if (enemyController != null) {
-                        enemyController.TakeDamage(effectiveDamage);
+                else {
+                    Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
+                    if (rb != null) {
+                        Vector3 direction = (hit.collider.transform.position - transform.position).normalized * currentWeapon.bulletForce;
+                        rb.AddForceAtPosition(direction, hit.collider.transform.position, ForceMode.Impulse);
                     }
 
-                    GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
-                    StartCoroutine(SplatterBlood(bloodSplat));
-                }
-                else if (hit.collider.tag == "Explodable") {
-                    ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
-                    exploder.Explode();
-                }
-                else {
-                    DrawBulletHole(hit);
+                    if (hit.collider.tag == "Enemy") {
+                        float playerDistance = Vector3.Distance(transform.position, hit.collider.transform.position);
+                        int effectiveDamage = CalcEffectiveDamage(playerDistance);
+
+                        EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>();
+                        if (enemyController != null) {
+                            enemyController.TakeDamage(effectiveDamage);
+                        }
+
+                        GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
+                        StartCoroutine(SplatterBlood(bloodSplat));
+                    }
+                    else if (hit.collider.tag == "Explodable") {
+                        ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
+                        exploder.Explode();
+                    }
+                    else {
+                        DrawBulletHole(hit);
+                    }
                 }
             }
         }

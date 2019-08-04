@@ -107,6 +107,9 @@ public class InteractionManager : MonoBehaviour {
         else if (collider.CompareTag("Health")) {
             healthManager.PickUpHealth(item);
         }
+        else if (collider.CompareTag("Armor")) {
+            healthManager.PickUpArmor(item);
+        }
         else if (collider.CompareTag("Item")) {
             hudController.Log("picked up " + item.name);
             itemManager.PickUpItem(item.name);
