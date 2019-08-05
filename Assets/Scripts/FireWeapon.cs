@@ -105,7 +105,7 @@ public class FireWeapon : MonoBehaviour {
             currentWeapon.ammo = currentWeapon.ammo - 1;
 
             for (int i = 0; i < currentWeapon.pellets; i++) {
-                float maxDeviation = 10f * i;
+                float maxDeviation = currentWeapon.spreadDeviation * i;
                 float xDeviation = Random.Range(-maxDeviation, maxDeviation);
                 float yDeviation = Random.Range(-maxDeviation, maxDeviation);
 

@@ -14,6 +14,7 @@ public abstract class Weapon {
     public float effectiveRange = 9999f;
     public int bulletForce = 3;
     public int pellets = 1;
+    public float spreadDeviation = 0;
 
     public Weapon(string name) {
         this.name = name;
@@ -55,6 +56,7 @@ public class Shotgun : Weapon {
         effectiveRange = 10f;
         bulletForce = 5;
         pellets = 5;
+        spreadDeviation = 10;
     }
 }
 
