@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class FireWeapon : MonoBehaviour {
     public Weapon currentWeapon;
@@ -97,23 +98,32 @@ public class FireWeapon : MonoBehaviour {
         bool nonAutoWeaponShoot = Input.GetButtonDown("Fire1") && !currentWeapon.auto;
         if ((autoWeaponShoot || nonAutoWeaponShoot) && !shooting && currentWeapon.ammo != 0) {
             shooting = true;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+
             StartCoroutine(FireShot());
             audioSource.PlayOneShot(shootSound, 0.5f);
             weaponController.shoot();
             currentWeapon.ammo = currentWeapon.ammo - 1;
 
-            if (Physics.Raycast(ray, out hit, currentWeapon.range)) {
-                Debug.DrawLine(transform.position, hit.point);
-                if (ignoreTags.Contains(hit.collider.tag)) {
-                    return;
-                }
+            for (int i = 0; i < currentWeapon.pellets; i++) {
+                float maxDeviation = 10f * i;
+                float xDeviation = Random.Range(-maxDeviation, maxDeviation);
+                float yDeviation = Random.Range(-maxDeviation, maxDeviation);
 
-                if (currentWeapon.projectile) {
-                    FireProjectile(hit);
-                }
-                else {
+                Vector3 bulletPos = new Vector3(Input.mousePosition.x + xDeviation, Input.mousePosition.y + yDeviation, Input.mousePosition.z);
+                Ray ray = Camera.main.ScreenPointToRay(bulletPos);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, currentWeapon.range)) {
+                    if (currentWeapon.projectile) {
+                        FireProjectile(hit);
+                        return;
+                    }
+
+                    //TODO use a layer to ignore instead
+                    if (ignoreTags.Contains(hit.collider.tag)) {
+                        return;
+                    }
+
                     Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
                     if (rb != null) {
                         Vector3 direction = (hit.collider.transform.position - transform.position).normalized * currentWeapon.bulletForce;
@@ -130,7 +140,7 @@ public class FireWeapon : MonoBehaviour {
                         }
 
                         GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
-                        StartCoroutine(SplatterBlood(bloodSplat));
+                        Destroy(bloodSplat, bloodTime);
                     }
                     else if (hit.collider.tag == "Explodable") {
                         ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
@@ -192,10 +202,5 @@ public class FireWeapon : MonoBehaviour {
         yield return new WaitForSeconds(currentWeapon.fireRate);
         shooting = false;
         weaponController.finishShoot();
-    }
-
-    IEnumerator SplatterBlood(GameObject bloodSplat) {
-        yield return new WaitForSeconds(bloodTime);
-        Destroy(bloodSplat);
     }
 }

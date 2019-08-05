@@ -111,9 +111,7 @@ public class InteractionManager : MonoBehaviour {
             healthManager.PickUpArmor(item);
         }
         else if (collider.CompareTag("Item")) {
-            hudController.Log("picked up " + item.name);
-            itemManager.PickUpItem(item.name);
-            item.SetActive(false);
+            itemManager.PickUpItem(item);
         }
     }
 

@@ -41,7 +41,8 @@ public class ExplodeScript : MonoBehaviour {
         GetComponent<MeshRenderer>().enabled = false;
 
         GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
-        StartCoroutine(RenderExplosion(explosion));
+        Destroy(explosion, blastDuration);
+        Destroy(gameObject, blastDuration);
 
         Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, blastRadius);
         foreach (Collider nearbyObject in nearbyObjects) {
@@ -65,11 +66,5 @@ public class ExplodeScript : MonoBehaviour {
                 explodable.Explode();
             }
         }
-    }
-
-    IEnumerator RenderExplosion(GameObject explosion) {
-        yield return new WaitForSeconds(blastDuration);
-        Destroy(explosion);
-        Destroy(gameObject);
     }
 }

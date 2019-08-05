@@ -47,13 +47,12 @@ public class Pistol : Weapon {
 
 public class Shotgun : Weapon {
     public Shotgun() : base("shotgun") {
-        range = 20f;
+        range = 30f;
         fireRate = 1f;
-        damage = 100;
         ammo = 5;
         maxAmmo = 99;
         collected = false;
-        effectiveRange = 5f;
+        effectiveRange = 10f;
         bulletForce = 5;
         pellets = 5;
     }
