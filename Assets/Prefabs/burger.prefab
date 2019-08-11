@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4084880940082549045}
   - component: {fileID: 2053147542839223261}
+  - component: {fileID: 217784454}
   m_Layer: 0
   m_Name: burger
   m_TagString: Health
@@ -46,6 +47,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.045542, y: 3.1921742, z: 3.2465265}
   m_Center: {x: -0.02878008, y: -0.35212022, z: -0.04624186}
+--- !u!114 &217784454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075006032204571430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d740d6540784e4b81b41894924099e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1404055550301345203
 GameObject:
   m_ObjectHideFlags: 0

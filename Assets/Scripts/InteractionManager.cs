@@ -73,25 +73,9 @@ public class InteractionManager : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider collider) {
-        GameObject item = collider.gameObject;
-        switch (collider.tag) {
-            case "Weapon":
-                fireWeapon.PickUpWeapon(item);
-                break;
-            case "Health":
-                healthManager.PickUpHealth(item);
-                break;
-            case "Ammo":
-                fireWeapon.PickUpAmmo(item);
-                break;
-            case "Armor":
-                healthManager.PickUpArmor(item);
-                break;
-            case "Item":
-                itemManager.PickUpItem(item);
-                break;
-            default:
-                break;
+        Triggerable triggerable = collider.gameObject.GetComponent<Triggerable>();
+        if (triggerable != null) {
+            triggerable.Interact();
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ExplodeScript : MonoBehaviour {
     public float timeToExplode;

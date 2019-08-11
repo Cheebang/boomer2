@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Triggerable : MonoBehaviour {
-    public abstract void Activate();
+    public virtual void SwitchState() { }
     public abstract void Interact();
 }

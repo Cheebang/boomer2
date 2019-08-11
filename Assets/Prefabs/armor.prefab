@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4818438991421584420}
   - component: {fileID: 7796655887731560643}
+  - component: {fileID: 2421284301459133295}
   m_Layer: 0
   m_Name: armor
   m_TagString: Armor
@@ -214,3 +215,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.3630643, y: 5.9823055, z: 5.0694222}
   m_Center: {x: 4.277304, y: 2.4911528, z: -0.24866147}
+--- !u!114 &2421284301459133295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8396347304105592375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a671454dd2ad1404da32b44a36971d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

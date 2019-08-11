@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BloodStain : MonoBehaviour {
@@ -22,6 +21,7 @@ public class BloodStain : MonoBehaviour {
                 GameObject stain = Instantiate(bloodStain);
                 stain.transform.position = hitPoint;
                 stain.transform.rotation = Quaternion.FromToRotation(Vector3.up, collisionEvents[i].normal);
+                stain.transform.parent = collisionEvents[i].colliderComponent.transform;
             }
         }
     }

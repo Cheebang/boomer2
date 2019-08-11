@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorScript : Triggerable {
@@ -56,7 +55,7 @@ public class DoorScript : Triggerable {
         open = !open;
     }
 
-    public override void Activate() {
+    public override void SwitchState() {
         open = !open;
     }
 }

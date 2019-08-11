@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7093548138741688641}
   - component: {fileID: 3552725589089523128}
   - component: {fileID: 6507958761458845066}
+  - component: {fileID: 1397935213}
   m_Layer: 0
-  m_Name: pistol ammo
+  m_Name: ammobox
   m_TagString: Ammo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986175815094182244}
-  m_LocalRotation: {x: 0.99994904, y: 0, z: 0, w: -0.010094547}
+  m_LocalRotation: {x: -0.9999491, y: 0, z: 0, w: 0.010096631}
   m_LocalPosition: {x: -3.9073982, y: 0.32, z: 26.167385}
   m_LocalScale: {x: 43.147, y: 31.011992, z: 15.911579}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -178.843, y: 0, z: 0}
 --- !u!33 &7093548138741688641
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -89,5 +90,17 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.020539287, y: 0.022269597, z: 0.022517249}
-  m_Center: {x: 0, y: -0.0011347997, z: 4.2274587e-12}
+  m_Size: {x: 0.030753285, y: 0.06108868, z: 0.11403097}
+  m_Center: {x: -0.0020454773, y: -0.020544127, z: 0.00971181}
+--- !u!114 &1397935213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2986175815094182244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8b945557f483e4fb685f8229432dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

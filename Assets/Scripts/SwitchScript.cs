@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwitchScript : Triggerable {
     public GameObject door;
@@ -11,7 +9,7 @@ public class SwitchScript : Triggerable {
         hudController = FindObjectOfType<HUDController>();
     }
 
-    public override void Activate() {
+    public override void SwitchState() {
         throw new System.NotImplementedException();
     }
 
@@ -27,7 +25,7 @@ public class SwitchScript : Triggerable {
     private void PushSwitch() {
         if (!pushed) {
             pushed = true;
-            door.GetComponent<Triggerable>().Activate();
+            door.GetComponent<Triggerable>().SwitchState();
             FindObjectOfType<HUDController>().Log("a secret is revealed...");
         }
     }

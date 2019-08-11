@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ExitLevelScript : Triggerable {
@@ -10,7 +8,7 @@ public class ExitLevelScript : Triggerable {
         hudController = FindObjectOfType<HUDController>();
     }
 
-    public override void Activate() {
+    public override void SwitchState() {
         throw new System.NotImplementedException();
     }
 
