@@ -156,7 +156,7 @@ MonoBehaviour:
   maxDist: 50
   projectile: {fileID: 8761253700134639540, guid: 67e031967a3c4b446b64512bbfd85ca7,
     type: 3}
-  dumb: 1
+  dumb: 0
 --- !u!54 &4934912
 Rigidbody:
   m_ObjectHideFlags: 0

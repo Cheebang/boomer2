@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorScript : MonoBehaviour {
+public class DoorScript : Triggerable {
     public bool open = false;
     public string keyRequired = null;
     public int speed = 1;
@@ -18,7 +18,26 @@ public class DoorScript : MonoBehaviour {
         hud = FindObjectOfType<HUDController>();
     }
 
-    public void AttemptOpenDoor(List<string> items) {
+    void Update() {
+        if (open) {
+            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+        }
+        else {
+            transform.position = Vector3.Lerp(transform.position, startPos, Time.deltaTime * speed);
+        }
+    }
+
+    public override void Interact() {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            Debug.Log("attempt to open door");
+            AttemptOpenDoor();
+        }
+        else {
+            hud.OpenMessagePanel("Press E to open");
+        }
+    }
+
+    private void AttemptOpenDoor() {
         if (locked) {
             hud.Log("door is locked");
             return;
@@ -26,6 +45,7 @@ public class DoorScript : MonoBehaviour {
 
         bool doorRequiresKey = !string.IsNullOrEmpty(keyRequired);
         if (doorRequiresKey) {
+            List<string> items = FindObjectOfType<ItemManager>().items;
             if (!items.Contains(keyRequired)) {
                 hud.Log("door requires " + keyRequired);
                 return;
@@ -36,16 +56,7 @@ public class DoorScript : MonoBehaviour {
         open = !open;
     }
 
-    void Update() {
-        if (open) {
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
-        }
-        else {
-            transform.position = Vector3.Lerp(transform.position, startPos, Time.deltaTime * speed);
-        }
-    }
-
-    public void Unlock() {
+    public override void Activate() {
         open = !open;
     }
 }

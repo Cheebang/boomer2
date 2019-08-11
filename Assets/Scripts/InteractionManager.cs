@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class InteractionManager : MonoBehaviour {
@@ -33,7 +31,6 @@ public class InteractionManager : MonoBehaviour {
         }
         else {
             ContinueGame();
-
         }
 
         if (Input.GetKeyDown(KeyCode.F2)) {
@@ -51,37 +48,16 @@ public class InteractionManager : MonoBehaviour {
             LoadData(playerData);
         }
 
+        CheckInteractions();
+    }
+
+    private void CheckInteractions() {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, interactionDistance)) {
-            GameObject item = hit.collider.gameObject;
-            if (hit.collider.CompareTag("Door")) {
-                if (Input.GetKeyDown(KeyCode.E)) {
-                    Debug.Log("attempt to open door");
-                    DoorScript doorScript = hit.collider.gameObject.GetComponent<DoorScript>();
-                    doorScript.AttemptOpenDoor(itemManager.items);
-                }
-                else {
-                    hudController.OpenMessagePanel("Press E to open");
-                }
-            }
-            else if (hit.collider.CompareTag("ExitLevel")) {
-                if (Input.GetKeyDown(KeyCode.E)) {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                }
-                else {
-                    hudController.OpenMessagePanel("Press E to exit level");
-                }
-            }
-            else if (hit.collider.CompareTag("Switch")) {
-                SwitchScript switchScript = hit.collider.gameObject.GetComponent<SwitchScript>();
-
-                if (!switchScript.pushed) {
-                    hudController.OpenMessagePanel("Press E interact");
-                }
-                if (Input.GetKeyDown(KeyCode.E)) {
-                    switchScript.PushSwitch();
-                }
+            Triggerable triggerable = hit.collider.gameObject.GetComponent<Triggerable>();
+            if (triggerable != null) {
+                triggerable.Interact();
             }
         }
     }
@@ -98,20 +74,24 @@ public class InteractionManager : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider) {
         GameObject item = collider.gameObject;
-        if (collider.CompareTag("Weapon")) {
-            fireWeapon.PickUpWeapon(item);
-        }
-        else if (collider.CompareTag("Ammo")) {
-            fireWeapon.PickUpAmmo(item);
-        }
-        else if (collider.CompareTag("Health")) {
-            healthManager.PickUpHealth(item);
-        }
-        else if (collider.CompareTag("Armor")) {
-            healthManager.PickUpArmor(item);
-        }
-        else if (collider.CompareTag("Item")) {
-            itemManager.PickUpItem(item);
+        switch (collider.tag) {
+            case "Weapon":
+                fireWeapon.PickUpWeapon(item);
+                break;
+            case "Health":
+                healthManager.PickUpHealth(item);
+                break;
+            case "Ammo":
+                fireWeapon.PickUpAmmo(item);
+                break;
+            case "Armor":
+                healthManager.PickUpArmor(item);
+                break;
+            case "Item":
+                itemManager.PickUpItem(item);
+                break;
+            default:
+                break;
         }
     }
 
@@ -121,9 +101,6 @@ public class InteractionManager : MonoBehaviour {
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        player.m_MouseLook.lockCursor = false;
-        player.m_MouseLook.SetCursorLock(false);
-        player.m_MouseLook.UpdateCursorLock();
         Time.timeScale = 0;
         mainMenu.Show();
     }
@@ -134,11 +111,7 @@ public class InteractionManager : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-        player.m_MouseLook.lockCursor = true;
-        player.m_MouseLook.SetCursorLock(true);
-        player.m_MouseLook.UpdateCursorLock();
         Time.timeScale = 1;
         mainMenu.Hide();
     }
-
 }

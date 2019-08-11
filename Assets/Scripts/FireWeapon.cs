@@ -30,7 +30,7 @@ public class FireWeapon : MonoBehaviour {
 
     private bool dead;
 
-    private List<string> ignoreTags = new List<string>() { "Player", "Projectile", "Weapon", "Item", "Ammo" };
+    private List<string> ignoreTags = new List<string>() { "Player", "Projectile", "Weapon", "Item", "Ammo", "Health" };
 
     void Start() {
         currentWeapon = weapons[1];
@@ -144,7 +144,9 @@ public class FireWeapon : MonoBehaviour {
                     }
                     else if (hit.collider.tag == "Explodable") {
                         ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
-                        exploder.Explode();
+                        if (exploder != null) {
+                            exploder.Explode();
+                        }
                     }
                     else {
                         DrawBulletHole(hit);
