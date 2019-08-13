@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class FireWeapon : MonoBehaviour {
+public class WeaponManager : MonoBehaviour {
     public Weapon currentWeapon;
     public AudioClip shootSound;
     public AudioClip emptySound;
@@ -80,6 +80,16 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 
+    internal void LoadWeapons(PlayerData playerData) {
+        weaponController.SwitchWeaponTo(currentWeapon.name, weapons[playerData.currentWeapon].name);
+        currentWeapon = weapons[playerData.currentWeapon];
+
+        for (int i = 0; i < weapons.Count; i++) {
+            weapons[i].ammo = playerData.weaponAmmo[i];
+            weapons[i].collected = playerData.weaponCollected[i];
+        }
+    }
+
     internal void Die() {
         dead = true;
     }
@@ -118,7 +128,7 @@ public class FireWeapon : MonoBehaviour {
                         return;
                     }
 
-                    //TODO use a layer to ignore instead
+                    //TODO use a layer to ignore instead?
                     if (ignoreTags.Contains(hit.collider.tag)) {
                         return;
                     }
@@ -129,25 +139,21 @@ public class FireWeapon : MonoBehaviour {
                         rb.AddForceAtPosition(direction, hit.collider.transform.position, ForceMode.Impulse);
                     }
 
-                    if (hit.collider.tag == "Enemy") {
+                    EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>();
+                    if (enemyController != null) {
                         float playerDistance = Vector3.Distance(transform.position, hit.collider.transform.position);
                         int effectiveDamage = CalcEffectiveDamage(playerDistance);
-
-                        EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>();
-                        if (enemyController != null) {
-                            enemyController.TakeDamage(effectiveDamage);
-                        }
-
+                        enemyController.TakeDamage(effectiveDamage);
                         GameObject bloodSplat = Instantiate(blood, hit.point, hit.collider.gameObject.transform.rotation);
                         Destroy(bloodSplat, bloodTime);
                     }
-                    else if (hit.collider.tag == "Explodable") {
-                        ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
-                        if (exploder != null) {
-                            exploder.Explode();
-                        }
+
+                    ExplodeScript exploder = hit.collider.gameObject.GetComponent<ExplodeScript>();
+                    if (exploder != null) {
+                        exploder.Explode();
                     }
-                    else {
+
+                    if (exploder == null && enemyController == null) {
                         DrawBulletHole(hit);
                     }
                 }
@@ -183,7 +189,6 @@ public class FireWeapon : MonoBehaviour {
             if (Input.GetKeyDown(weaponKey) && weapons[i].collected) {
                 weaponController.SwitchWeaponTo(currentWeapon.name, weapons[i].name);
                 currentWeapon = weapons[i];
-                Debug.Log("switched to " + currentWeapon.name);
             }
         }
     }

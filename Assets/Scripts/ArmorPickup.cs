@@ -1,5 +1,5 @@
 ﻿public class ArmorPickup : Triggerable {
-    public override void Interact() {
+    public override void PickUp() {
         FindObjectOfType<HealthManager>().PickUpArmor(gameObject);
     }
 }

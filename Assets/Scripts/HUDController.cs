@@ -15,11 +15,11 @@ public class HUDController : MonoBehaviour {
     public float logTextDisplayLength = 3f;
 
     private bool showMessagePanel = false;
-    private FireWeapon weaponData;
+    private WeaponManager weaponData;
     private HealthManager healthManager;
 
     void Start() {
-        weaponData = FindObjectOfType<FireWeapon>();
+        weaponData = FindObjectOfType<WeaponManager>();
         healthManager = FindObjectOfType<HealthManager>();
     }
 

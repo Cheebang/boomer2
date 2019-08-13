@@ -6,7 +6,7 @@ public class HealthManager : MonoBehaviour {
     public int health = 100;
     public int armor = 0;
     private FirstPersonController fpsController;
-    private FireWeapon fireWeapon;
+    private WeaponManager weaponManager;
     private HUDController hudController;
     private bool dead;
     private float startDeadTimer = 1f;
@@ -17,7 +17,7 @@ public class HealthManager : MonoBehaviour {
     void Start() {
         deadTimer = startDeadTimer;
         fpsController = GetComponent<FirstPersonController>();
-        fireWeapon = GetComponent<FireWeapon>();
+        weaponManager = GetComponent<WeaponManager>();
         hudController = FindObjectOfType<HUDController>();
     }
 
@@ -88,6 +88,6 @@ public class HealthManager : MonoBehaviour {
     private void Die() {
         dead = true;
         fpsController.Die();
-        fireWeapon.Die();
+        weaponManager.Die();
     }
 }

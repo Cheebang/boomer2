@@ -2,5 +2,6 @@
 
 public abstract class Triggerable : MonoBehaviour {
     public virtual void SwitchState() { }
-    public abstract void Interact();
+    public virtual void Interact() { }
+    public virtual void PickUp() { }
 }

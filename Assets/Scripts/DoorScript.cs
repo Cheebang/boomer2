@@ -28,7 +28,6 @@ public class DoorScript : Triggerable {
 
     public override void Interact() {
         if (Input.GetKeyDown(KeyCode.E)) {
-            Debug.Log("attempt to open door");
             AttemptOpenDoor();
         }
         else {

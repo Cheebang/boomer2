@@ -4,7 +4,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class InteractionManager : MonoBehaviour {
     public float interactionDistance = 5f;
-    private FireWeapon fireWeapon;
+    private WeaponManager weaponManager;
     private HealthManager healthManager;
     private ItemManager itemManager;
     private HUDController hudController;
@@ -13,7 +13,7 @@ public class InteractionManager : MonoBehaviour {
     private bool paused = false;
 
     void Start() {
-        fireWeapon = GetComponent<FireWeapon>();
+        weaponManager = GetComponent<WeaponManager>();
         healthManager = GetComponent<HealthManager>();
         itemManager = GetComponent<ItemManager>();
         hudController = FindObjectOfType<HUDController>();
@@ -52,8 +52,8 @@ public class InteractionManager : MonoBehaviour {
     }
 
     private void CheckInteractions() {
-        Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(ray, out hit, interactionDistance)) {
             Triggerable triggerable = hit.collider.gameObject.GetComponent<Triggerable>();
             if (triggerable != null) {
@@ -62,26 +62,32 @@ public class InteractionManager : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter(Collider collider) {
+        Triggerable triggerable = collider.gameObject.GetComponent<Triggerable>();
+        if (triggerable != null) {
+            triggerable.PickUp();
+        }
+    }
+
     internal void LoadData(PlayerData playerData) {
-        player.transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+        transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+        transform.rotation = Quaternion.Euler(new Vector3(playerData.rotation[0], playerData.rotation[1], playerData.rotation[2]));
+
         healthManager.health = playerData.health;
+        healthManager.armor = playerData.armor;
         itemManager.items = new List<string>(playerData.items);
+
+        weaponManager.LoadWeapons(playerData);
+
         if (paused) {
             paused = false;
             ContinueGame();
         }
     }
 
-    void OnTriggerEnter(Collider collider) {
-        Triggerable triggerable = collider.gameObject.GetComponent<Triggerable>();
-        if (triggerable != null) {
-            triggerable.Interact();
-        }
-    }
-
     private void PauseGame() {
         player.paused = true;
-        fireWeapon.paused = true;
+        weaponManager.paused = true;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -90,7 +96,7 @@ public class InteractionManager : MonoBehaviour {
     }
     private void ContinueGame() {
         player.paused = false;
-        fireWeapon.paused = false;
+        weaponManager.paused = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
