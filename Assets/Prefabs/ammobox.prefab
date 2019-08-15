@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3552725589089523128}
   - component: {fileID: 6507958761458845066}
   - component: {fileID: 1397935213}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ammobox
   m_TagString: Ammo
   m_Icon: {fileID: 0}

@@ -35,7 +35,8 @@ public class InteractionManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F2)) {
             hudController.Log("Quicksaved...");
-            SaveSystem.SavePlayer(gameObject);
+            GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
+            SaveSystem.Save(this.gameObject, gameObjects);
             if (paused) {
                 paused = false;
                 ContinueGame();
@@ -44,7 +45,8 @@ public class InteractionManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F3)) {
             hudController.Log("Quickloaded...");
-            PlayerData playerData = SaveSystem.LoadPlayer();
+            GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
+            PlayerData playerData = SaveSystem.Load(gameObjects);
             LoadData(playerData);
         }
 

@@ -34,9 +34,9 @@ public class HealthManager : MonoBehaviour {
         }
     }
 
-    public void PickUpHealth(GameObject item) {
+    public void PickUpHealth(GameObject item, string objectName) {
         if (health < maxHealth) {
-            hudController.Log("picked up " + item.name);
+            hudController.Log("picked up " + objectName);
             health += 25;
             item.SetActive(false);
             if (health > maxHealth) {

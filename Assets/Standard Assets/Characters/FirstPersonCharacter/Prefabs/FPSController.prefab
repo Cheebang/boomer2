@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 844643626}
   - component: {fileID: 844643627}
   - component: {fileID: 844643628}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FPSController
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -317,6 +317,9 @@ MonoBehaviour:
   projectileSpeed: 15
   projectile: {fileID: 4596507300327383360, guid: ac89cd10b207207458ed2ecb37021155,
     type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 307
 --- !u!114 &844643626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +372,7 @@ GameObject:
   - component: {fileID: 2000000}
   - component: {fileID: 8100000}
   - component: {fileID: 12474086}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -460,7 +463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3784274208675621740}
   - component: {fileID: 6613411690719114047}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

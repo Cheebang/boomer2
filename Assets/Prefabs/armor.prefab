@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7938098665024932938}
   - component: {fileID: 8419599237720478724}
   - component: {fileID: 8775785056766583226}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3930885856097063490}
   - component: {fileID: 3335647231385234758}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4818438991421584420}
   - component: {fileID: 7796655887731560643}
   - component: {fileID: 2421284301459133295}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: armor
   m_TagString: Armor
   m_Icon: {fileID: 0}

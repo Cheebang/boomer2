@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468161750143693995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9612103, y: 1.524, z: 24.612041}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.2864, y: 2.2864003, z: 2.2864}
   m_Children: []
   m_Father: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   maxDist: 50
   projectile: {fileID: 8761253700134639540, guid: 67e031967a3c4b446b64512bbfd85ca7,
     type: 3}
+  dead: 0
   dumb: 0
 --- !u!54 &4934912
 Rigidbody:

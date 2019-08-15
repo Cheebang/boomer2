@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4084880940082549045}
   - component: {fileID: 2053147542839223261}
   - component: {fileID: 217784454}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: burger
   m_TagString: Health
   m_Icon: {fileID: 0}
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d740d6540784e4b81b41894924099e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: health
 --- !u!1 &1404055550301345203
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ GameObject:
   - component: {fileID: 7816860954261849798}
   - component: {fileID: 8036326084666314540}
   - component: {fileID: 3274660815992983845}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8111382069029596992}
   - component: {fileID: 3516692276392498643}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

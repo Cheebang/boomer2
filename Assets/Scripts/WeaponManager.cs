@@ -29,7 +29,7 @@ public class WeaponManager : MonoBehaviour {
 
     private bool dead;
 
-    private List<string> ignoreTags = new List<string>() { "Player", "Projectile", "Weapon", "Item", "Ammo", "Health" };
+    public LayerMask layerMask;
 
     void Start() {
         currentWeapon = weapons[1];
@@ -122,14 +122,9 @@ public class WeaponManager : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(bulletPos);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, currentWeapon.range)) {
+                if (Physics.Raycast(ray, out hit, currentWeapon.range, layerMask)) {
                     if (currentWeapon.projectile) {
                         FireProjectile(hit);
-                        return;
-                    }
-
-                    //TODO use a layer to ignore instead?
-                    if (ignoreTags.Contains(hit.collider.tag)) {
                         return;
                     }
 

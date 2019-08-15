@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -9,23 +10,28 @@ public class EnemyController : MonoBehaviour {
     public float minDist = 10f;
     public float maxDist = 300f;
     public GameObject projectile;
+    public bool dead = false;
     public bool dumb;
 
     private Animator anim;
     private FirstPersonController player;
     private NavMeshAgent agent;
     private float hurtAnimationLength = 0.5f;
-    private bool dead;
     private bool isAttacking = false;
     private float attackCoolDownTime = 2f;
     private float projectileSpeed = 15;
     private bool knowsPlayerPosition;
     private float sightDistance = 50f;
+    private Vector3 initialPos;
+    private int startHp;
 
     void Start() {
         anim = GetComponent<Animator>();
         player = FindObjectOfType<FirstPersonController>();
         agent = GetComponent<NavMeshAgent>();
+
+        initialPos = transform.position;
+        startHp = hp;
     }
 
     void Update() {
@@ -75,6 +81,15 @@ public class EnemyController : MonoBehaviour {
         isAttacking = false;
     }
 
+    internal void Reset() {
+        transform.position = initialPos;
+        dead = false;
+        hp = startHp;
+        GetComponent<Animator>().SetBool("dead", false);
+        GetComponent<Animator>().Play("Idle", -1, 0f);
+        GetComponent<BoxCollider>().enabled = true;
+    }
+
     public void TakeDamage(int damage) {
         hp -= damage;
         if (hp <= 0) {
@@ -86,10 +101,10 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    private void Die() {
+    public void Die() {
         dead = true;
-        anim.SetBool("dead", true);
-        Destroy(GetComponent<BoxCollider>());
+        GetComponent<Animator>().SetBool("dead", true);
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     IEnumerator ReactToDamage() {
