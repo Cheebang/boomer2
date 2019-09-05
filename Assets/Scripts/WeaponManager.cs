@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 using Random = UnityEngine.Random;
 
 public class WeaponManager : MonoBehaviour {
@@ -22,6 +23,7 @@ public class WeaponManager : MonoBehaviour {
     private float bloodTime = 0.7f;
     private AudioSource audioSource;
     private WeaponAnimationController weaponController;
+    private ActiveWeapon activeWeapon;
     private HUDController hudController;
 
     List<GameObject> bulletHoles = new List<GameObject>();
@@ -30,12 +32,15 @@ public class WeaponManager : MonoBehaviour {
     private bool dead;
 
     public LayerMask layerMask;
+    private FirstPersonController fpsController;
 
     void Start() {
         currentWeapon = weapons[1];
 
         audioSource = GetComponent<AudioSource>();
+        fpsController = GetComponent<FirstPersonController>();
         weaponController = FindObjectOfType<WeaponAnimationController>();
+        activeWeapon = FindObjectOfType<ActiveWeapon>();
         hudController = FindObjectOfType<HUDController>();
 
         for (int i = 0; i < bulletHoleMax; i++) {
@@ -48,7 +53,8 @@ public class WeaponManager : MonoBehaviour {
             if (item.name == weapon.name) {
                 if (!weapon.collected) {
                     weapon.collected = true;
-                    weaponController.SwitchWeaponTo(currentWeapon.name, weapon.name);
+                    activeWeapon.updateActiveWeapon(weapons.IndexOf(weapon));
+                    weaponController = FindObjectOfType<WeaponAnimationController>();
                     currentWeapon = weapon;
                     hudController.Log("picked up " + item.name);
                     item.SetActive(false);
@@ -81,7 +87,7 @@ public class WeaponManager : MonoBehaviour {
     }
 
     internal void LoadWeapons(PlayerData playerData) {
-        weaponController.SwitchWeaponTo(currentWeapon.name, weapons[playerData.currentWeapon].name);
+        //weaponController.SwitchWeaponTo(currentWeapon.name, weapons[playerData.currentWeapon].name);
         currentWeapon = weapons[playerData.currentWeapon];
 
         for (int i = 0; i < weapons.Count; i++) {
@@ -100,6 +106,12 @@ public class WeaponManager : MonoBehaviour {
         }
         updateCurrentWeapon();
         fireCurrentWeapon();
+        if (!shooting && fpsController.bobbing && !fpsController.m_Jumping) {
+            weaponController.startWalking();
+        }
+        else {
+            weaponController.finishWalking();
+        }
     }
 
     private void fireCurrentWeapon() {
@@ -182,7 +194,8 @@ public class WeaponManager : MonoBehaviour {
         for (int i = 0; i < weapons.Count; i++) {
             string weaponKey = (i + 1).ToString();
             if (Input.GetKeyDown(weaponKey) && weapons[i].collected) {
-                weaponController.SwitchWeaponTo(currentWeapon.name, weapons[i].name);
+                activeWeapon.updateActiveWeapon(i);
+                weaponController = FindObjectOfType<WeaponAnimationController>();
                 currentWeapon = weapons[i];
             }
         }

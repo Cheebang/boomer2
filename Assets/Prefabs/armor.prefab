@@ -227,3 +227,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a671454dd2ad1404da32b44a36971d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectName: small armor

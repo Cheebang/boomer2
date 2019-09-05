@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WeaponAnimationController : MonoBehaviour {
     private Animator anim;
@@ -16,6 +13,14 @@ public class WeaponAnimationController : MonoBehaviour {
 
     public void finishShoot() {
         anim.SetBool("shooting", false);
+    }
+
+    public void startWalking() {
+        anim.SetBool("walking", true);
+    }
+
+    public void finishWalking() {
+        anim.SetBool("walking", false);
     }
 
     internal void SwitchWeaponTo(string name, string newName) {

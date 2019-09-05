@@ -35,8 +35,6 @@ public class EnemyController : MonoBehaviour {
     }
 
     void Update() {
-        Vector3 v = new Vector3(0, player.transform.position.y - transform.position.y, 0);
-        transform.LookAt(player.transform.position - v);
         if (dumb) {
             return;
         }
@@ -58,6 +56,8 @@ public class EnemyController : MonoBehaviour {
         }
 
         if (knowsPlayerPosition) {
+            Vector3 v = new Vector3(0, player.transform.position.y - transform.position.y, 0);
+            transform.LookAt(player.transform.position - v);
             agent.isStopped = false;
             if (!isAttacking) {
                 isAttacking = true;
@@ -87,7 +87,7 @@ public class EnemyController : MonoBehaviour {
         hp = startHp;
         GetComponent<Animator>().SetBool("dead", false);
         GetComponent<Animator>().Play("Idle", -1, 0f);
-        GetComponent<BoxCollider>().enabled = true;
+        GetComponent<Collider>().enabled = true;
     }
 
     public void TakeDamage(int damage) {
@@ -104,7 +104,7 @@ public class EnemyController : MonoBehaviour {
     public void Die() {
         dead = true;
         GetComponent<Animator>().SetBool("dead", true);
-        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
     }
 
     IEnumerator ReactToDamage() {

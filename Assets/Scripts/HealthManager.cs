@@ -48,7 +48,7 @@ public class HealthManager : MonoBehaviour {
         }
     }
 
-    public void PickUpArmor(GameObject item) {
+    public void PickUpArmor(GameObject item, string objectName) {
         if (armor < maxArmor) {
             hudController.Log("picked up " + item.name);
             armor += 25;
