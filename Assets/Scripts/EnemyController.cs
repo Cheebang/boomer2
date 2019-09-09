@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour {
     private int startHp;
 
     void Start() {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         player = FindObjectOfType<FirstPersonController>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -45,20 +45,31 @@ public class EnemyController : MonoBehaviour {
         }
 
         if (!knowsPlayerPosition) {
-            Ray ray = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, sightDistance)) {
-                GameObject item = hit.collider.gameObject;
-                if (hit.collider.CompareTag("Player")) {
-                    knowsPlayerPosition = true;
+            bool withinAngle = false;
+            Vector3 targetDir = player.transform.position - transform.position;
+            float angleToPlayer = Vector3.Angle(targetDir, transform.forward);
+            if (angleToPlayer <= 85) {
+                withinAngle = true;
+            }
+
+            if (withinAngle) {
+                Ray ray = new Ray(transform.position, targetDir);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, sightDistance)) {
+                    GameObject item = hit.collider.gameObject;
+                    if (hit.collider.CompareTag("Player")) {
+                        knowsPlayerPosition = true;
+                    }
                 }
             }
         }
 
         if (knowsPlayerPosition) {
-            Vector3 v = new Vector3(0, player.transform.position.y - transform.position.y, 0);
-            transform.LookAt(player.transform.position - v);
+            Vector3 targetDir = player.transform.position - transform.position;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetDir), Time.time * (moveSpeed / 2));
             agent.isStopped = false;
+            anim.SetBool("walking", true);
+
             if (!isAttacking) {
                 isAttacking = true;
                 GameObject newProjectile = Instantiate(projectile, transform.position, transform.rotation);
@@ -72,6 +83,7 @@ public class EnemyController : MonoBehaviour {
             else {
                 knowsPlayerPosition = false;
                 agent.isStopped = true;
+                anim.SetBool("walking", false);
             }
         }
     }
@@ -97,13 +109,15 @@ public class EnemyController : MonoBehaviour {
         }
         else {
             anim.SetBool("hurt", true);
+            knowsPlayerPosition = true;
             StartCoroutine(ReactToDamage());
         }
     }
 
     public void Die() {
         dead = true;
-        GetComponent<Animator>().SetBool("dead", true);
+        anim.SetBool("walking", false);
+        anim.SetBool("dead", true);
         GetComponent<Collider>().enabled = false;
     }
 
