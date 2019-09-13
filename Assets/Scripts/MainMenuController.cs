@@ -40,12 +40,11 @@ public class MainMenuController : MonoBehaviour {
     }
 
     void Save() {
-        //SaveSystem.SavePlayer(player, (Triggerable[])Resources.FindObjectsOfTypeAll(typeof(Triggerable)));
+        GameEvents.OnSaveInitiated();
     }
 
     void Load() {
-        //PlayerData playerData = SaveSystem.LoadPlayer((Triggerable[])Resources.FindObjectsOfTypeAll(typeof(Triggerable)));
-        //player.GetComponent<InteractionManager>().LoadData(playerData);
+        GameEvents.OnLoadInitiated();
     }
 
     void QuitGame() {

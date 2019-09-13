@@ -36,7 +36,7 @@ public class InteractionManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F2)) {
             hudController.Log("Quicksaved...");
             GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
-            SaveSystem.Save(this.gameObject, gameObjects);
+            GameEvents.OnSaveInitiated();
             if (paused) {
                 paused = false;
                 ContinueGame();
@@ -45,9 +45,7 @@ public class InteractionManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F3)) {
             hudController.Log("Quickloaded...");
-            GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
-            PlayerData playerData = SaveSystem.Load(gameObjects);
-            LoadData(playerData);
+            GameEvents.OnLoadInitiated();
         }
 
         CheckInteractions();
@@ -68,22 +66,6 @@ public class InteractionManager : MonoBehaviour {
         Triggerable triggerable = collider.gameObject.GetComponent<Triggerable>();
         if (triggerable != null) {
             triggerable.PickUp();
-        }
-    }
-
-    internal void LoadData(PlayerData playerData) {
-        transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
-        transform.rotation = Quaternion.Euler(new Vector3(playerData.rotation[0], playerData.rotation[1], playerData.rotation[2]));
-
-        healthManager.health = playerData.health;
-        healthManager.armor = playerData.armor;
-        itemManager.items = new List<string>(playerData.items);
-
-        weaponManager.LoadWeapons(playerData);
-
-        if (paused) {
-            paused = false;
-            ContinueGame();
         }
     }
 

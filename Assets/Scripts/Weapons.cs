@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public abstract class Weapon {
     public string name;
     public float range = 9999f;
     public float fireRate = 0.25f;
     public int damage = 25;
-    public AudioClip shootSound;
     public bool collected = false;
     public int ammo = 10;
     public int maxAmmo = 299;
@@ -28,6 +28,7 @@ public abstract class Weapon {
     }
 }
 
+[System.Serializable]
 public class Melee : Weapon {
     public Melee() : base("melee") {
         range = 2f;
@@ -40,12 +41,14 @@ public class Melee : Weapon {
     }
 }
 
+[System.Serializable]
 public class Pistol : Weapon {
     public Pistol() : base("pistol") {
         collected = true;
     }
 }
 
+[System.Serializable]
 public class Shotgun : Weapon {
     public Shotgun() : base("shotgun") {
         range = 30f;
@@ -60,6 +63,7 @@ public class Shotgun : Weapon {
     }
 }
 
+[System.Serializable]
 public class MachineGun : Weapon {
     public MachineGun() : base("mg") {
         range = 100f;
@@ -73,6 +77,7 @@ public class MachineGun : Weapon {
     }
 }
 
+[System.Serializable]
 public class RPG : Weapon {
     public RPG() : base("rpg") {
         fireRate = 0.5f;

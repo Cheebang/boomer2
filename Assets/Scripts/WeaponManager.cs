@@ -35,6 +35,9 @@ public class WeaponManager : MonoBehaviour {
     private FirstPersonController fpsController;
 
     void Start() {
+        GameEvents.SaveInitiated += Save;
+        GameEvents.LoadInitiated += Load;
+
         currentWeapon = weapons[1];
 
         audioSource = GetComponent<AudioSource>();
@@ -45,6 +48,17 @@ public class WeaponManager : MonoBehaviour {
 
         for (int i = 0; i < bulletHoleMax; i++) {
             bulletHoles.Add(Instantiate(bulletHole));
+        }
+    }
+
+    private void Save() {
+        SaveLoad.Save(weapons, "weaponInventory");
+    }
+
+    private void Load() {
+        if (SaveLoad.SaveExistsAt("weaponInventory")) {
+            List<Weapon> loadedWeapons = SaveLoad.Load<List<Weapon>>("weaponInventory");
+            weapons = loadedWeapons;
         }
     }
 
@@ -83,16 +97,6 @@ public class WeaponManager : MonoBehaviour {
                     hudController.Log(weapon.name + " ammo is full");
                 }
             }
-        }
-    }
-
-    internal void LoadWeapons(PlayerData playerData) {
-        //weaponController.SwitchWeaponTo(currentWeapon.name, weapons[playerData.currentWeapon].name);
-        currentWeapon = weapons[playerData.currentWeapon];
-
-        for (int i = 0; i < weapons.Count; i++) {
-            weapons[i].ammo = playerData.weaponAmmo[i];
-            weapons[i].collected = playerData.weaponCollected[i];
         }
     }
 
