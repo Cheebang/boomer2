@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public abstract class Weapon {
     public string name;
     public float range = 9999f;

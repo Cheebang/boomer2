@@ -1,6 +1,5 @@
-﻿public class WeaponPickup : Triggerable {
+﻿public class WeaponPickup : Pickup {
     public override void PickUp() {
-        base.PickUp();
         FindObjectOfType<WeaponManager>().PickUpWeapon(gameObject);
     }
 }

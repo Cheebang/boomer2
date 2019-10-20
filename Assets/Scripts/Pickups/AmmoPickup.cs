@@ -1,6 +1,5 @@
-﻿public class AmmoPickup : Triggerable {
+﻿public class AmmoPickup : Pickup {
     public override void PickUp() {
-        base.PickUp();
         FindObjectOfType<WeaponManager>().PickUpAmmo(gameObject);
     }
 }

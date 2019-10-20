@@ -64,7 +64,6 @@ public class InteractionManager : MonoBehaviour {
 
     private void Quicksave() {
         hudController.Log("Quicksaved...");
-        GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
         GameEvents.OnSaveInitiated();
         if (paused) {
             paused = false;
@@ -84,9 +83,9 @@ public class InteractionManager : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider collider) {
-        Triggerable triggerable = collider.gameObject.GetComponent<Triggerable>();
-        if (triggerable != null) {
-            triggerable.PickUp();
+        Pickup pickup = collider.gameObject.GetComponent<Pickup>();
+        if (pickup != null) {
+            pickup.PickUp();
         }
     }
 
@@ -111,6 +110,7 @@ public class InteractionManager : MonoBehaviour {
     }
 
     private void OnDestroy() {
+        GameEvents.SaveInitiated -= Save;
         GameEvents.LoadInitiated -= Load;
     }
 }
