@@ -19,6 +19,19 @@ public class HealthManager : MonoBehaviour {
         fpsController = GetComponent<FirstPersonController>();
         weaponManager = GetComponent<WeaponManager>();
         hudController = FindObjectOfType<HUDController>();
+        GameEvents.SaveInitiated += Save;
+        GameEvents.LoadInitiated += Load;
+    }
+
+    void Save() {
+        int[] healthArmor = { health, armor };
+        SaveLoad.Save(healthArmor, "playerHealth");
+    }
+
+    void Load() {
+        int[] healthArmor = SaveLoad.Load<int[]>("playerHealth");
+        health = healthArmor[0];
+        armor = healthArmor[1];
     }
 
     void Update() {

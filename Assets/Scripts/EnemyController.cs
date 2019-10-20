@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.FirstPerson;
+using System.Linq;
 
 public class EnemyController : MonoBehaviour {
     public int hp = 100;
@@ -15,9 +16,13 @@ public class EnemyController : MonoBehaviour {
     public Transform[] patrolRoute;
 
     private int destPoint = 0;
+
+    public string uniqueId;
+
     private Animator anim;
     private FirstPersonController player;
     private NavMeshAgent agent;
+    private EnemyCollection enemyCollection;
     private float hurtAnimationLength = 0.5f;
     private bool isAttacking = false;
     private float attackCoolDownTime = 2f;
@@ -32,15 +37,36 @@ public class EnemyController : MonoBehaviour {
     public float patrolPauseLength = 3;
 
     void Start() {
+        uniqueId = UniqueId.Generate(gameObject);
+
+        GameEvents.LoadInitiated += Load;
+
         anim = GetComponentInChildren<Animator>();
         player = FindObjectOfType<FirstPersonController>();
         agent = GetComponent<NavMeshAgent>();
+        enemyCollection = FindObjectOfType<EnemyCollection>();
 
         initialPos = transform.position;
         startHp = hp;
 
         agent.autoBraking = false;
         GotoNextPoint();
+    }
+
+    public void Load() {
+        EnemyData matchingData = enemyCollection.enemies.First(c => c.uniqueId == uniqueId);
+        if (matchingData != null) {
+            hp = matchingData.hp;
+            dead = matchingData.dead;
+            transform.position = new Vector3(matchingData.position[0], matchingData.position[1], matchingData.position[2]);
+            if (dead) {
+                Die();
+            }
+        }
+    }
+
+    private void OnDestroy() {
+        GameEvents.LoadInitiated -= Load;
     }
 
     void GotoNextPoint() {

@@ -19,6 +19,19 @@ public class InteractionManager : MonoBehaviour {
         hudController = FindObjectOfType<HUDController>();
         player = GetComponent<FirstPersonController>();
         mainMenu = FindObjectOfType<MainMenuController>();
+        GameEvents.SaveInitiated += Save;
+        GameEvents.LoadInitiated += Load;
+    }
+
+    void Save() {
+        PlayerData playerData = new PlayerData(gameObject);
+        SaveLoad.Save(playerData, "playerData");
+    }
+
+    void Load() {
+        PlayerData playerData = SaveLoad.Load<PlayerData>("playerData");
+        transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+        transform.eulerAngles = new Vector3(playerData.rotation[0], playerData.rotation[1], playerData.rotation[2]);
     }
 
     void Update() {
@@ -34,21 +47,29 @@ public class InteractionManager : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.F2)) {
-            hudController.Log("Quicksaved...");
-            GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
-            GameEvents.OnSaveInitiated();
-            if (paused) {
-                paused = false;
-                ContinueGame();
-            }
+            Quicksave();
         }
 
         if (Input.GetKeyDown(KeyCode.F3)) {
-            hudController.Log("Quickloaded...");
-            GameEvents.OnLoadInitiated();
+            Quickload();
         }
 
         CheckInteractions();
+    }
+
+    private void Quickload() {
+        hudController.Log("Quickloaded...");
+        GameEvents.OnLoadInitiated();
+    }
+
+    private void Quicksave() {
+        hudController.Log("Quicksaved...");
+        GameObject[] gameObjects = (GameObject[])Resources.FindObjectsOfTypeAll(typeof(GameObject));
+        GameEvents.OnSaveInitiated();
+        if (paused) {
+            paused = false;
+            ContinueGame();
+        }
     }
 
     private void CheckInteractions() {
@@ -87,5 +108,9 @@ public class InteractionManager : MonoBehaviour {
         Cursor.visible = false;
         Time.timeScale = 1;
         mainMenu.Hide();
+    }
+
+    private void OnDestroy() {
+        GameEvents.LoadInitiated -= Load;
     }
 }

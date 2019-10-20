@@ -13,5 +13,4 @@ public class GameEvents : MonoBehaviour {
     public static void OnLoadInitiated() {
         LoadInitiated?.Invoke();
     }
-
 }
