@@ -47,10 +47,10 @@ public class HealthManager : MonoBehaviour {
         }
     }
 
-    public void PickUpHealth(GameObject item, string objectName) {
+    public void PickUpHealth(GameObject item, int amount) {
         if (health < maxHealth) {
-            hudController.Log("picked up " + objectName);
-            health += 25;
+            hudController.Log("picked up " + item.name);
+            health += amount;
             item.SetActive(false);
             if (health > maxHealth) {
                 health = maxHealth;
@@ -61,10 +61,10 @@ public class HealthManager : MonoBehaviour {
         }
     }
 
-    public void PickUpArmor(GameObject item, string objectName) {
+    public void PickUpArmor(GameObject item, int amount) {
         if (armor < maxArmor) {
             hudController.Log("picked up " + item.name);
-            armor += 25;
+            armor += amount;
             item.SetActive(false);
             if (armor > maxArmor) {
                 armor = maxArmor;

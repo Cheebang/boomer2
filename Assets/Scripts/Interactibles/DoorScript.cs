@@ -28,14 +28,14 @@ public class DoorScript : Triggerable {
 
     public override void Interact() {
         if (Input.GetKeyDown(KeyCode.E)) {
-            AttemptinterractedDoor();
+            AttemptOpen();
         }
         else {
-            hud.OpenMessagePanel("Press E to interracted");
+            hud.OpenMessagePanel("Press E to open");
         }
     }
 
-    private void AttemptinterractedDoor() {
+    private void AttemptOpen() {
         if (locked) {
             hud.Log("door is locked");
             return;
@@ -48,7 +48,7 @@ public class DoorScript : Triggerable {
                 hud.Log("door requires " + keyRequired);
                 return;
             }
-            hud.Log("door interracteded with " + keyRequired);
+            hud.Log("door opened with " + keyRequired);
         }
 
         SwitchState();

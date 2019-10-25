@@ -80,7 +80,7 @@ public class RPG : Weapon {
     public RPG() : base("rpg") {
         fireRate = 0.5f;
         damage = 700;
-        ammo = -1;
+        ammo = 5;
         maxAmmo = 49;
         collected = true;
         projectile = true;

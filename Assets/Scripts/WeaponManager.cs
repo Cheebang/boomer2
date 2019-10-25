@@ -85,12 +85,12 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
-    public void PickUpAmmo(GameObject item) {
+    public void PickUpAmmo(GameObject item, int amount) {
         foreach (Weapon weapon in weapons) {
             if (item.name.Contains(weapon.name)) {
                 if (weapon.ammo < weapon.maxAmmo) {
-                    hudController.Log("picked up " + item.name);
-                    weapon.AddAmmo(10);
+                    hudController.Log("picked up " + item.name + " x" + amount);
+                    weapon.AddAmmo(amount);
                     item.SetActive(false);
                 }
                 else {
