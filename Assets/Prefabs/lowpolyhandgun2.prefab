@@ -30,7 +30,7 @@ Transform:
   - {fileID: 6036440247134612600}
   m_Father: {fileID: 9127604433210576202}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.000015258788, y: 180, z: -180}
 --- !u!1 &4826703411361587093
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +87,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -142,7 +143,7 @@ Transform:
   - {fileID: 9159069908099035823}
   m_Father: {fileID: 4757430104499160772}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 86.15248, y: -106.002426, z: -106.124245}
 --- !u!1 &5255870123693768537
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,13 +154,15 @@ GameObject:
   m_Component:
   - component: {fileID: 9127604433210576202}
   - component: {fileID: 1162421416568070192}
+  - component: {fileID: 1009299967288113453}
+  - component: {fileID: 7539288400730760851}
   m_Layer: 9
   m_Name: lowpolyhandgun2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9127604433210576202
 Transform:
   m_ObjectHideFlags: 0
@@ -167,7 +170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5255870123693768537}
-  m_LocalRotation: {x: 0.010274947, y: -0.998761, z: 0.047299065, w: 0.011566032}
+  m_LocalRotation: {x: 0.010271813, y: -0.99876106, z: 0.047298044, w: 0.011566983}
   m_LocalPosition: {x: -0.073, y: -0.088, z: 0.481}
   m_LocalScale: {x: 0.071254104, y: 0.071254104, z: 0.071254104}
   m_Children:
@@ -188,7 +191,7 @@ Animator:
   m_GameObject: {fileID: 5255870123693768537}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 788135ad85ec39147b8e7288b9705dab, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8aac2771c4fd63478683d0feedae0b6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -197,6 +200,42 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1009299967288113453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255870123693768537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b1c95a200fca44f92a5773a25da21d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: pistol
+  range: 9999
+  fireRate: 0.25
+  damage: 25
+  maxAmmo: 299
+  auto: 0
+  projectile: 0
+  effectiveRange: 9999
+  bulletForce: 3
+  pellets: 1
+  spreadDeviation: 0
+  shootSound: {fileID: 8300000, guid: 81a8838a52fab8b4e8e3e319ae8b0e67, type: 3}
+--- !u!114 &7539288400730760851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255870123693768537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52207db05efc4ee4099a18f544ffd475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6663506250827096409
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +292,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -364,6 +404,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

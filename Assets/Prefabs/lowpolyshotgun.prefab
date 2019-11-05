@@ -87,6 +87,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -123,13 +124,14 @@ GameObject:
   - component: {fileID: 7233147525308298511}
   - component: {fileID: 786808976190445685}
   - component: {fileID: 333123494}
+  - component: {fileID: 8478975230956857294}
   m_Layer: 9
   m_Name: lowpolyshotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7233147525308298511
 Transform:
   m_ObjectHideFlags: 0
@@ -139,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 5925070804485785372}
   m_LocalRotation: {x: 0.10118648, y: 0, z: 0, w: 0.9948675}
   m_LocalPosition: {x: -4.883, y: 1.562, z: 38.617}
-  m_LocalScale: {x: 0.0712541, y: 0.0712541, z: 0.0712541}
+  m_LocalScale: {x: 0.07125408, y: 0.071254104, z: 0.07125408}
   m_Children:
   - {fileID: 6399412758615375489}
   - {fileID: 6596740291986739803}
@@ -179,6 +181,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52207db05efc4ee4099a18f544ffd475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8478975230956857294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925070804485785372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b1c95a200fca44f92a5773a25da21d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: shotgun
+  range: 30
+  fireRate: 1
+  damage: 25
+  maxAmmo: 99
+  auto: 0
+  projectile: 0
+  effectiveRange: 10
+  bulletForce: 5
+  pellets: 5
+  spreadDeviation: 10
+  shootSound: {fileID: 0}
 --- !u!1 &6354978932326705104
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +261,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -347,6 +374,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

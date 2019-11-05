@@ -24,8 +24,8 @@ public class HUDController : MonoBehaviour {
     }
 
     void Update() {
-        weaponNameText.text = weaponData.currentWeapon.name;
-        ammoPanelText.text = weaponData.currentWeapon.ammo.ToString();
+        weaponNameText.text = weaponData.currentWeaponState.name;
+        ammoPanelText.text = weaponData.currentWeaponState.ammo.ToString();
 
         messagePanel.SetActive(showMessagePanel);
         if (showMessagePanel) {
